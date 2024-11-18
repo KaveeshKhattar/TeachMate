@@ -4,8 +4,7 @@ import { WebhookEvent } from '@clerk/nextjs/server'
 import { createUser } from '../../../lib/users'
 import { User } from '@prisma/client'
 import prisma from '../../../lib/prisma'
-import { supabase } from '@/app/lib/supabase'
-import { redirect } from 'next/dist/server/api-utils'
+
 
 export async function POST(req: Request) {
 
@@ -78,7 +77,7 @@ export async function POST(req: Request) {
         const { user: createdUser } = await createUser(user as User);
         console.log('User created successfully:', createdUser);
 
-        
+
     } else if (eventType === 'user.updated') {
         console.log("event data for update: ", evt.data)
         const { id, email_addresses, first_name, last_name, image_url, unsafe_metadata } = evt.data;
@@ -112,48 +111,35 @@ export async function POST(req: Request) {
         const { role, grade, school, board, teacher_id } = unsafe_metadata;
         const teacher_id_number = Number(teacher_id);
 
-        console.log('Unsafe metadata:', unsafe_metadata);
-        console.log('Teacher ID:', teacher_id);
-        console.log('Teacher ID Number:', teacher_id_number);
-        console.log('Grade:', grade);
-        console.log('School:', school);
-        console.log('Board:', board);
-        console.log('Existing User ID:', existingUser?.id);
-
         if (role === 'STUDENT') {
             try {
-                const { data, error } = await prisma.student.upsert({
+                const student = await prisma.student.upsert({
                     where: {
                         userId: existingUser.id, // Find student by userId
                     },
                     update: {
-                        grade,   // Update grade
-                        school,  // Update school
-                        board, 
-                        teacherId: teacher_id_number // Update board
+                        grade: typeof grade === 'string' ? grade : null,
+                        school: typeof school === 'string' ? school : null,
+                        board: typeof board === 'string' ? board : null,
+                        teacherId: teacher_id_number
                     },
                     create: {
-                        userId: existingUser.id, // Create student if it doesn't exist
-                        grade,   // Set grade
-                        school,  // Set school
-                        board,
-                        teacherId: teacher_id_number   // Set board
+                        userId: existingUser.id, 
+                        grade: typeof grade === 'string' ? grade : null,
+                        school: typeof school === 'string' ? school : null,
+                        board: typeof board === 'string' ? board : null,
+                        teacherId: teacher_id_number
                     },
                 });
 
-                if (error) {
-                    console.error('Error syncing student data to Supabase:', error);
-                    return;
-                }
-
-                console.log('Student data synced successfully:', data);
+                console.log('Student data synced successfully:', student);
             } catch (error) {
                 console.error('Error syncing student data:', error);
             }
         }
         else if (role === 'TEACHER') {
             try {
-                const { data, error } = await prisma.teacher.upsert({
+                const teacher = await prisma.teacher.upsert({
                     where: {
                         userId: existingUser.id, // Find student by userId
                     },
@@ -165,12 +151,7 @@ export async function POST(req: Request) {
                     },
                 });
 
-                if (error) {
-                    console.error('Error syncing teacher data to Supabase:', error);
-                    return;
-                }
-
-                console.log('Teacher data synced successfully:', data);
+                console.log('Teacher data synced successfully:', teacher);
             } catch (error) {
                 console.error('Error syncing teacher data:', error);
             }

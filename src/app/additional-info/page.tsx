@@ -19,16 +19,24 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
+interface Teacher {
+  user: {
+    id: number;
+    firstName: string;
+    lastName: string;
+    imageUrl: string;
+  };
+}
+
 export default function UnSafePage() {
   const { user } = useUser();
-  const [role, setRole] = useState("");
-  const [grade, setGrade] = useState("");
-  const [school, setSchool] = useState("");
-  const [board, setBoard] = useState("");
-  const [teachers, setTeachers] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
+  const [role, setRole] = useState<string>("");
+  const [grade, setGrade] = useState<string>("");
+  const [school, setSchool] = useState<string>("");
+  const [board, setBoard] = useState<string>("");
+  const [teachers, setTeachers] = useState<Teacher[]>([]);
+  const [open, setOpen] = useState<boolean>(false);
+  const [value, setValue] = useState<string>("");
 
   useEffect(() => {
     // Fetch teacher data from the API
@@ -38,7 +46,7 @@ export default function UnSafePage() {
         if (!response.ok) {
           throw new Error(`Failed to fetch teachers: ${response.statusText}`);
         }
-        const data = await response.json();
+        const data: Teacher[] = await response.json();
 
         // Set the data in state
         setTeachers(data);
@@ -52,15 +60,8 @@ export default function UnSafePage() {
     fetchTeachers();
   }, []);
 
-  // Filter teachers based on searchTerm
-  const filteredTeachers = teachers.filter((teacher) =>
-    `${teacher.user.firstName} ${teacher.user.lastName}`
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
-  );
-
   const handleUpdate = () => {
-    const metadata = {};
+    const metadata: Record<string, string | number> = {};
 
     // Add additional fields for students if role is "STUDENT"
     if (role === "STUDENT") {
@@ -74,13 +75,13 @@ export default function UnSafePage() {
     }
 
     user
-      .update({
+      ?.update({
         unsafeMetadata: metadata,
       })
       .then(() => {
         console.log("User updated with unsafe metadata");
       })
-      .catch((err) => {
+      .catch((err: Error) => {
         console.error("Error updating user:", err);
       });
   };
@@ -140,12 +141,12 @@ export default function UnSafePage() {
                         src={
                           teachers.find(
                             (teacher) => teacher.user.id.toString() === value
-                          )?.user.imageUrl
+                          )?.user.imageUrl || ""
                         }
                         alt={
                           teachers.find(
                             (teacher) => teacher.user.id.toString() === value
-                          )?.user.firstName
+                          )?.user.firstName || "Teacher"
                         }
                         width={20}
                         height={20}
@@ -176,7 +177,6 @@ export default function UnSafePage() {
                   <CommandInput
                     placeholder="Search teacher..."
                     className="h-9"
-                    onChange={(e) => setSearchTerm(e.target.value)}
                   />
                   <CommandList>
                     <CommandEmpty>No teacher found.</CommandEmpty>
