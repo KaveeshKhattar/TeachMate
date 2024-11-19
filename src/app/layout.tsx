@@ -41,24 +41,24 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <header className="flex justify-between items-center">
-            <Link href="/" className="text-2xl pl-2 font-bold">Teachmate</Link>
+            <Link href="/" className="text-2xl pl-2 font-bold">
+              Teachmate
+            </Link>
             <div className="p-2">
               <SignedOut>
-                
                 <SignInButton>
-                  <Button variant="secondary" className="mr-2">Sign In</Button>
+                  <Button variant="secondary" className="mr-2">
+                    Sign In
+                  </Button>
                 </SignInButton>
-                
+
                 <SignUpButton>
                   <Button>Sign Up</Button>
                 </SignUpButton>
-
               </SignedOut>
             </div>
             <SignedIn>
-              
               <div className="flex p-2">
-                
                 <UserButton />
 
                 <SignOutButton>
@@ -68,16 +68,16 @@ export default function RootLayout({
                 </SignOutButton>
 
                 <Link href={"/additional-info"}>
-                <Button variant="outline" className="ml-2">
+                  <Button variant="outline" className="ml-2">
                     Account
-                </Button>
+                  </Button>
                 </Link>
-
               </div>
-
             </SignedIn>
           </header>
+
           {children}
+          
         </body>
       </html>
     </ClerkProvider>

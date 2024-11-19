@@ -1,70 +1,78 @@
 generator client {
-    provider = "prisma-client-js"
-    output   = "./generated/client"
+  provider = "prisma-client-js"
+  output   = "./generated/client"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-    id          Int      @id @default(autoincrement())
-    email       String   @unique
-    firstName   String?
-    lastName    String?
-    imageUrl    String?
-    clerkUserId String   @unique
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
-    Student     Student?
-    Teacher     Teacher?
+  id          Int      @id @default(autoincrement())
+  email       String   @unique
+  firstName   String?
+  lastName    String?
+  imageUrl    String?
+  clerkUserId String   @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Student     Student?
+  Teacher     Teacher?
 }
 
 model Student {
-    id        Int      @id @default(autoincrement())
-    userId    Int      @unique
-    grade     String?
-    school    String?
-    board     String?
-    teacherId Int      @unique
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    user    User    @relation(fields: [userId], references: [id])
-    teacher Teacher @relation(fields: [teacherId], references: [userId])
-    test_tuition_student_info Test_Tuition_Student_Info?
+  id                        Int                        @id @default(autoincrement())
+  userId                    Int                        @unique
+  grade                     String?
+  school                    String?
+  board                     String?
+  createdAt                 DateTime                   @default(now())
+  updatedAt                 DateTime                   @updatedAt
+  teacherId                 Int                        @unique
+  teacher                   Teacher                    @relation(fields: [teacherId], references: [userId])
+  user                      User                       @relation(fields: [userId], references: [id])
+  school_tests              Test_School[]
+  test_tuition_student_info Test_Tuition_Student_Info?
 }
 
 model Teacher {
-    id        Int      @id @default(autoincrement())
-    userId    Int      @unique
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    user         User          @relation(fields: [userId], references: [id])
-    Student      Student?
-    Test_Tuition Test_Tuition?
+  id                        Int                        @id @default(autoincrement())
+  userId                    Int                        @unique
+  createdAt                 DateTime                   @default(now())
+  updatedAt                 DateTime                   @updatedAt
+  Student                   Student?
+  user                      User                       @relation(fields: [userId], references: [id])
+  Test_Tuition_Student_Info Test_Tuition_Student_Info?
 }
 
 model Test_Tuition {
-    id          Int      @id @default(autoincrement())
-    name        String
-    subject     String
-    date        DateTime
-    total_marks Int
-    teacherId   Int      @unique
-
-    teacher Teacher @relation(fields: [teacherId], references: [userId])
-    test_tuition_student_info Test_Tuition_Student_Info?
+  id                        Int                        @id @default(autoincrement())
+  name                      String
+  subject                   String
+  date                      DateTime
+  marks_scored              Int
+  total_marks               Int
+  test_tuition_student_info Test_Tuition_Student_Info?
 }
 
 model Test_Tuition_Student_Info {
-    testId Int @unique
-    studentId Int @unique
-    marks_scored Int
-    test_status Boolean
+  testId       Int          @unique
+  teacherId    Int          @unique
+  studentId    Int          @unique
+  student      Student      @relation(fields: [studentId], references: [userId])
+  teacher      Teacher      @relation(fields: [teacherId], references: [userId])
+  tuition_test Test_Tuition @relation(fields: [testId], references: [id])
+}
 
-    test_tuition Test_Tuition @relation(fields: [testId], references: [id])
-    student Student @relation(fields: [studentId], references: [userId])
+model Test_School {
+  id           Int      @id @default(autoincrement())
+  name         String
+  syllabus     String
+  date         DateTime
+  marks_scored Int
+  total_marks  Int
+  test_status  Boolean
+  studentId    Int
+  student      Student  @relation(fields: [studentId], references: [userId])
 }
