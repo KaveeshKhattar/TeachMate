@@ -129,6 +129,7 @@ exports.Prisma.UserScalarFieldEnum = {
   lastName: 'lastName',
   imageUrl: 'imageUrl',
   clerkUserId: 'clerkUserId',
+  role: 'role',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -154,14 +155,10 @@ exports.Prisma.TeacherScalarFieldEnum = {
 exports.Prisma.Test_TuitionScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  subject: 'subject',
+  syllabus: 'syllabus',
   date: 'date',
   marks_scored: 'marks_scored',
-  total_marks: 'total_marks'
-};
-
-exports.Prisma.Test_Tuition_Student_InfoScalarFieldEnum = {
-  testId: 'testId',
+  total_marks: 'total_marks',
   teacherId: 'teacherId',
   studentId: 'studentId'
 };
@@ -198,7 +195,6 @@ exports.Prisma.ModelName = {
   Student: 'Student',
   Teacher: 'Teacher',
   Test_Tuition: 'Test_Tuition',
-  Test_Tuition_Student_Info: 'Test_Tuition_Student_Info',
   Test_School: 'Test_School'
 };
 

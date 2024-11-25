@@ -1,17 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignOutButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { ClerkProvider } from "@clerk/nextjs";
+import Hamburger from "./_components/hamburger";
+import { ThemeProvider } from "@/components/themeProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -37,47 +29,29 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
+        <head>
+          <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css"
+            integrity="sha512-9xKTRVabjVeZmc+GUW8GgSmcREDunMM+Dt/GrzchfN8tkwHizc5RP4Ok/MXFFy5rIjJjzhndFScTceq5e6GvVQ=="
+            crossOrigin="anonymous"
+            referrerPolicy="no-referrer"
+          />
+        </head>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <header className="flex justify-between items-center">
-            <Link href="/" className="text-2xl pl-2 font-bold">
-              Teachmate
-            </Link>
-            <div className="p-2">
-              <SignedOut>
-                <SignInButton>
-                  <Button variant="secondary" className="mr-2">
-                    Sign In
-                  </Button>
-                </SignInButton>
-
-                <SignUpButton>
-                  <Button>Sign Up</Button>
-                </SignUpButton>
-              </SignedOut>
-            </div>
-            <SignedIn>
-              <div className="flex p-2">
-                <UserButton />
-
-                <SignOutButton>
-                  <Button variant="destructive" className="ml-2">
-                    Sign Out
-                  </Button>
-                </SignOutButton>
-
-                <Link href={"/additional-info"}>
-                  <Button variant="outline" className="ml-2">
-                    Account
-                  </Button>
-                </Link>
-              </div>
-            </SignedIn>
-          </header>
-
-          {children}
-          
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <header className="flex justify-between items-center">
+              <Hamburger />
+            </header>
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

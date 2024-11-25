@@ -8,9 +8,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useUser } from "@clerk/nextjs";
 import { Input } from "@/components/ui/input";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import {
   Dialog,
@@ -21,7 +20,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { redirect } from "next/dist/server/api-utils";
+import { useUser } from "@clerk/nextjs";
 
 type SchoolTest = {
   id: string;
@@ -34,8 +33,10 @@ type SchoolTest = {
   status: "pending" | "completed";
 };
 
+
 export default function SchoolTest() {
   const [tests, setTests] = useState<SchoolTest[]>([]);
+  
   const { user } = useUser();
 
   const [testName, setTestName] = useState("");
@@ -109,14 +110,14 @@ export default function SchoolTest() {
     }
   };
 
-  const fetchTests = async () => {
-    if (!user) {
+  const fetchTests = useCallback(async () => {
+    if (!user?.id) {
       console.error("User is not available");
       return;
     }
 
     try {
-      const response = await fetch(`/api/schoolTest?userId=${user.id}`, {
+      const response = await fetch(`/api/schoolTest?userId=${user?.id}`, {
         method: "GET", // Use GET request here
         headers: {
           "Content-Type": "application/json", // optional
@@ -133,14 +134,12 @@ export default function SchoolTest() {
     } catch (error) {
       console.error("Error fetching tests:", error);
     }
-  };
+  }, [user?.id]);
 
   // useEffect to handle the asynchronous fetch
   useEffect(() => {
-    if (user?.id) {
       fetchTests();
-    }
-  }, [user?.id]); // Trigger fetch when user.id is available
+  }, [fetchTests, user?.id]); // Trigger fetch when user.id is available
 
   return (
     <div>
@@ -148,7 +147,7 @@ export default function SchoolTest() {
         {tests.length > 0 ? (
           tests.map((test) => (
             <div
-              className="flex flex-col justify-center items-center"
+              className="flex flex-col justify-center items-center mb-4"
               key={test.id}
             >
               <Card className="w-[350px]">
@@ -203,7 +202,7 @@ export default function SchoolTest() {
                         <DialogTitle>Update Test (School)</DialogTitle>
                         <DialogDescription>
                           Update the school test that was, or is yet to be
-                          conducted. Click save when you're done.
+                          conducted. Click save when you&apos;re done.
                         </DialogDescription>
                       </DialogHeader>
                       <div className="grid gap-4 py-4">
@@ -281,7 +280,9 @@ export default function SchoolTest() {
             </div>
           ))
         ) : (
-          <p className="flex items-center justify-center mt-8">No tests found</p>
+          <p className="flex items-center justify-center mt-8">
+            No tests found
+          </p>
         )}
       </ul>
     </div>

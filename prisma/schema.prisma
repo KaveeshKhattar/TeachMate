@@ -15,6 +15,7 @@ model User {
   lastName    String?
   imageUrl    String?
   clerkUserId String   @unique
+  role        String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   Student     Student?
@@ -22,47 +23,42 @@ model User {
 }
 
 model Student {
-  id                        Int                        @id @default(autoincrement())
-  userId                    Int                        @unique
-  grade                     String?
-  school                    String?
-  board                     String?
-  createdAt                 DateTime                   @default(now())
-  updatedAt                 DateTime                   @updatedAt
-  teacherId                 Int                        @unique
-  teacher                   Teacher                    @relation(fields: [teacherId], references: [userId])
-  user                      User                       @relation(fields: [userId], references: [id])
-  school_tests              Test_School[]
-  test_tuition_student_info Test_Tuition_Student_Info?
+  id            Int            @id @default(autoincrement())
+  userId        Int            @unique
+  grade         String?
+  school        String?
+  board         String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  teacherId     Int // Removed @unique
+  teacher       Teacher        @relation(fields: [teacherId], references: [userId])
+  user          User           @relation(fields: [userId], references: [id])
+  school_tests  Test_School[]
+  tuition_tests Test_Tuition[]
 }
 
 model Teacher {
-  id                        Int                        @id @default(autoincrement())
-  userId                    Int                        @unique
-  createdAt                 DateTime                   @default(now())
-  updatedAt                 DateTime                   @updatedAt
-  Student                   Student?
-  user                      User                       @relation(fields: [userId], references: [id])
-  Test_Tuition_Student_Info Test_Tuition_Student_Info?
+  id           Int            @id @default(autoincrement())
+  userId       Int            @unique
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  Student      Student[]
+  user         User           @relation(fields: [userId], references: [id])
+  test_tuition Test_Tuition[]
 }
 
 model Test_Tuition {
-  id                        Int                        @id @default(autoincrement())
-  name                      String
-  subject                   String
-  date                      DateTime
-  marks_scored              Int
-  total_marks               Int
-  test_tuition_student_info Test_Tuition_Student_Info?
-}
+  id           Int      @id @default(autoincrement())
+  name         String
+  syllabus     String
+  date         DateTime
+  marks_scored Int
+  total_marks  Int
+  teacherId    Int
+  studentId    Int
 
-model Test_Tuition_Student_Info {
-  testId       Int          @unique
-  teacherId    Int          @unique
-  studentId    Int          @unique
-  student      Student      @relation(fields: [studentId], references: [userId])
-  teacher      Teacher      @relation(fields: [teacherId], references: [userId])
-  tuition_test Test_Tuition @relation(fields: [testId], references: [id])
+  teacher Teacher @relation(fields: [teacherId], references: [userId])
+  student Student @relation(fields: [studentId], references: [userId])
 }
 
 model Test_School {

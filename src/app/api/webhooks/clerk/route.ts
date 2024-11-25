@@ -103,12 +103,15 @@ export async function POST(req: Request) {
         if (!existingUser) {
             return new Response("User not found for update", { status: 404 });
         }
+        
+        const { tempRole } = unsafe_metadata;
 
         const updatedUserData = {
             email: email_addresses[0].email_address,
             ...(first_name ? { firstName: first_name } : {}),
             ...(last_name ? { lastName: last_name } : {}),
             ...(image_url ? { imageUrl: image_url } : {}),
+            ...(tempRole ? { tempRole: tempRole } : {}),
         };
 
         await prisma.user.update({

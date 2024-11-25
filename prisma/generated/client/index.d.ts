@@ -34,11 +34,6 @@ export type Teacher = $Result.DefaultSelection<Prisma.$TeacherPayload>
  */
 export type Test_Tuition = $Result.DefaultSelection<Prisma.$Test_TuitionPayload>
 /**
- * Model Test_Tuition_Student_Info
- * 
- */
-export type Test_Tuition_Student_Info = $Result.DefaultSelection<Prisma.$Test_Tuition_Student_InfoPayload>
-/**
  * Model Test_School
  * 
  */
@@ -206,16 +201,6 @@ export class PrismaClient<
     * ```
     */
   get test_Tuition(): Prisma.Test_TuitionDelegate<ExtArgs>;
-
-  /**
-   * `prisma.test_Tuition_Student_Info`: Exposes CRUD operations for the **Test_Tuition_Student_Info** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Test_Tuition_Student_Infos
-    * const test_Tuition_Student_Infos = await prisma.test_Tuition_Student_Info.findMany()
-    * ```
-    */
-  get test_Tuition_Student_Info(): Prisma.Test_Tuition_Student_InfoDelegate<ExtArgs>;
 
   /**
    * `prisma.test_School`: Exposes CRUD operations for the **Test_School** model.
@@ -671,7 +656,6 @@ export namespace Prisma {
     Student: 'Student',
     Teacher: 'Teacher',
     Test_Tuition: 'Test_Tuition',
-    Test_Tuition_Student_Info: 'Test_Tuition_Student_Info',
     Test_School: 'Test_School'
   };
 
@@ -688,7 +672,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "student" | "teacher" | "test_Tuition" | "test_Tuition_Student_Info" | "test_School"
+      modelProps: "user" | "student" | "teacher" | "test_Tuition" | "test_School"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -972,76 +956,6 @@ export namespace Prisma {
           }
         }
       }
-      Test_Tuition_Student_Info: {
-        payload: Prisma.$Test_Tuition_Student_InfoPayload<ExtArgs>
-        fields: Prisma.Test_Tuition_Student_InfoFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.Test_Tuition_Student_InfoFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Test_Tuition_Student_InfoPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.Test_Tuition_Student_InfoFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Test_Tuition_Student_InfoPayload>
-          }
-          findFirst: {
-            args: Prisma.Test_Tuition_Student_InfoFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Test_Tuition_Student_InfoPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.Test_Tuition_Student_InfoFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Test_Tuition_Student_InfoPayload>
-          }
-          findMany: {
-            args: Prisma.Test_Tuition_Student_InfoFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Test_Tuition_Student_InfoPayload>[]
-          }
-          create: {
-            args: Prisma.Test_Tuition_Student_InfoCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Test_Tuition_Student_InfoPayload>
-          }
-          createMany: {
-            args: Prisma.Test_Tuition_Student_InfoCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.Test_Tuition_Student_InfoCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Test_Tuition_Student_InfoPayload>[]
-          }
-          delete: {
-            args: Prisma.Test_Tuition_Student_InfoDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Test_Tuition_Student_InfoPayload>
-          }
-          update: {
-            args: Prisma.Test_Tuition_Student_InfoUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Test_Tuition_Student_InfoPayload>
-          }
-          deleteMany: {
-            args: Prisma.Test_Tuition_Student_InfoDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.Test_Tuition_Student_InfoUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          upsert: {
-            args: Prisma.Test_Tuition_Student_InfoUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$Test_Tuition_Student_InfoPayload>
-          }
-          aggregate: {
-            args: Prisma.Test_Tuition_Student_InfoAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateTest_Tuition_Student_Info>
-          }
-          groupBy: {
-            args: Prisma.Test_Tuition_Student_InfoGroupByArgs<ExtArgs>
-            result: $Utils.Optional<Test_Tuition_Student_InfoGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.Test_Tuition_Student_InfoCountArgs<ExtArgs>
-            result: $Utils.Optional<Test_Tuition_Student_InfoCountAggregateOutputType> | number
-          }
-        }
-      }
       Test_School: {
         payload: Prisma.$Test_SchoolPayload<ExtArgs>
         fields: Prisma.Test_SchoolFieldRefs
@@ -1274,10 +1188,12 @@ export namespace Prisma {
 
   export type StudentCountOutputType = {
     school_tests: number
+    tuition_tests: number
   }
 
   export type StudentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     school_tests?: boolean | StudentCountOutputTypeCountSchool_testsArgs
+    tuition_tests?: boolean | StudentCountOutputTypeCountTuition_testsArgs
   }
 
   // Custom InputTypes
@@ -1296,6 +1212,53 @@ export namespace Prisma {
    */
   export type StudentCountOutputTypeCountSchool_testsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: Test_SchoolWhereInput
+  }
+
+  /**
+   * StudentCountOutputType without action
+   */
+  export type StudentCountOutputTypeCountTuition_testsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Test_TuitionWhereInput
+  }
+
+
+  /**
+   * Count Type TeacherCountOutputType
+   */
+
+  export type TeacherCountOutputType = {
+    Student: number
+    test_tuition: number
+  }
+
+  export type TeacherCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Student?: boolean | TeacherCountOutputTypeCountStudentArgs
+    test_tuition?: boolean | TeacherCountOutputTypeCountTest_tuitionArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * TeacherCountOutputType without action
+   */
+  export type TeacherCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TeacherCountOutputType
+     */
+    select?: TeacherCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * TeacherCountOutputType without action
+   */
+  export type TeacherCountOutputTypeCountStudentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StudentWhereInput
+  }
+
+  /**
+   * TeacherCountOutputType without action
+   */
+  export type TeacherCountOutputTypeCountTest_tuitionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: Test_TuitionWhereInput
   }
 
 
@@ -1330,6 +1293,7 @@ export namespace Prisma {
     lastName: string | null
     imageUrl: string | null
     clerkUserId: string | null
+    role: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1341,6 +1305,7 @@ export namespace Prisma {
     lastName: string | null
     imageUrl: string | null
     clerkUserId: string | null
+    role: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1352,6 +1317,7 @@ export namespace Prisma {
     lastName: number
     imageUrl: number
     clerkUserId: number
+    role: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1373,6 +1339,7 @@ export namespace Prisma {
     lastName?: true
     imageUrl?: true
     clerkUserId?: true
+    role?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1384,6 +1351,7 @@ export namespace Prisma {
     lastName?: true
     imageUrl?: true
     clerkUserId?: true
+    role?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1395,6 +1363,7 @@ export namespace Prisma {
     lastName?: true
     imageUrl?: true
     clerkUserId?: true
+    role?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1493,6 +1462,7 @@ export namespace Prisma {
     lastName: string | null
     imageUrl: string | null
     clerkUserId: string
+    role: string | null
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -1523,6 +1493,7 @@ export namespace Prisma {
     lastName?: boolean
     imageUrl?: boolean
     clerkUserId?: boolean
+    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     Student?: boolean | User$StudentArgs<ExtArgs>
@@ -1536,6 +1507,7 @@ export namespace Prisma {
     lastName?: boolean
     imageUrl?: boolean
     clerkUserId?: boolean
+    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1547,6 +1519,7 @@ export namespace Prisma {
     lastName?: boolean
     imageUrl?: boolean
     clerkUserId?: boolean
+    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -1570,6 +1543,7 @@ export namespace Prisma {
       lastName: string | null
       imageUrl: string | null
       clerkUserId: string
+      role: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -1973,6 +1947,7 @@ export namespace Prisma {
     readonly lastName: FieldRef<"User", 'String'>
     readonly imageUrl: FieldRef<"User", 'String'>
     readonly clerkUserId: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -2566,7 +2541,7 @@ export namespace Prisma {
     teacher?: boolean | TeacherDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     school_tests?: boolean | Student$school_testsArgs<ExtArgs>
-    test_tuition_student_info?: boolean | Student$test_tuition_student_infoArgs<ExtArgs>
+    tuition_tests?: boolean | Student$tuition_testsArgs<ExtArgs>
     _count?: boolean | StudentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["student"]>
 
@@ -2598,7 +2573,7 @@ export namespace Prisma {
     teacher?: boolean | TeacherDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     school_tests?: boolean | Student$school_testsArgs<ExtArgs>
-    test_tuition_student_info?: boolean | Student$test_tuition_student_infoArgs<ExtArgs>
+    tuition_tests?: boolean | Student$tuition_testsArgs<ExtArgs>
     _count?: boolean | StudentCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type StudentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2612,7 +2587,7 @@ export namespace Prisma {
       teacher: Prisma.$TeacherPayload<ExtArgs>
       user: Prisma.$UserPayload<ExtArgs>
       school_tests: Prisma.$Test_SchoolPayload<ExtArgs>[]
-      test_tuition_student_info: Prisma.$Test_Tuition_Student_InfoPayload<ExtArgs> | null
+      tuition_tests: Prisma.$Test_TuitionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -2990,7 +2965,7 @@ export namespace Prisma {
     teacher<T extends TeacherDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TeacherDefaultArgs<ExtArgs>>): Prisma__TeacherClient<$Result.GetResult<Prisma.$TeacherPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     school_tests<T extends Student$school_testsArgs<ExtArgs> = {}>(args?: Subset<T, Student$school_testsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Test_SchoolPayload<ExtArgs>, T, "findMany"> | Null>
-    test_tuition_student_info<T extends Student$test_tuition_student_infoArgs<ExtArgs> = {}>(args?: Subset<T, Student$test_tuition_student_infoArgs<ExtArgs>>): Prisma__Test_Tuition_Student_InfoClient<$Result.GetResult<Prisma.$Test_Tuition_Student_InfoPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    tuition_tests<T extends Student$tuition_testsArgs<ExtArgs> = {}>(args?: Subset<T, Student$tuition_testsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Test_TuitionPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3366,18 +3341,23 @@ export namespace Prisma {
   }
 
   /**
-   * Student.test_tuition_student_info
+   * Student.tuition_tests
    */
-  export type Student$test_tuition_student_infoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Student$tuition_testsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Test_Tuition_Student_Info
+     * Select specific fields to fetch from the Test_Tuition
      */
-    select?: Test_Tuition_Student_InfoSelect<ExtArgs> | null
+    select?: Test_TuitionSelect<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: Test_Tuition_Student_InfoInclude<ExtArgs> | null
-    where?: Test_Tuition_Student_InfoWhereInput
+    include?: Test_TuitionInclude<ExtArgs> | null
+    where?: Test_TuitionWhereInput
+    orderBy?: Test_TuitionOrderByWithRelationInput | Test_TuitionOrderByWithRelationInput[]
+    cursor?: Test_TuitionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Test_TuitionScalarFieldEnum | Test_TuitionScalarFieldEnum[]
   }
 
   /**
@@ -3591,7 +3571,8 @@ export namespace Prisma {
     updatedAt?: boolean
     Student?: boolean | Teacher$StudentArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
-    Test_Tuition_Student_Info?: boolean | Teacher$Test_Tuition_Student_InfoArgs<ExtArgs>
+    test_tuition?: boolean | Teacher$test_tuitionArgs<ExtArgs>
+    _count?: boolean | TeacherCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["teacher"]>
 
   export type TeacherSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3612,7 +3593,8 @@ export namespace Prisma {
   export type TeacherInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Student?: boolean | Teacher$StudentArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
-    Test_Tuition_Student_Info?: boolean | Teacher$Test_Tuition_Student_InfoArgs<ExtArgs>
+    test_tuition?: boolean | Teacher$test_tuitionArgs<ExtArgs>
+    _count?: boolean | TeacherCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TeacherIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -3621,9 +3603,9 @@ export namespace Prisma {
   export type $TeacherPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Teacher"
     objects: {
-      Student: Prisma.$StudentPayload<ExtArgs> | null
+      Student: Prisma.$StudentPayload<ExtArgs>[]
       user: Prisma.$UserPayload<ExtArgs>
-      Test_Tuition_Student_Info: Prisma.$Test_Tuition_Student_InfoPayload<ExtArgs> | null
+      test_tuition: Prisma.$Test_TuitionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -3994,9 +3976,9 @@ export namespace Prisma {
    */
   export interface Prisma__TeacherClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    Student<T extends Teacher$StudentArgs<ExtArgs> = {}>(args?: Subset<T, Teacher$StudentArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    Student<T extends Teacher$StudentArgs<ExtArgs> = {}>(args?: Subset<T, Teacher$StudentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findMany"> | Null>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
-    Test_Tuition_Student_Info<T extends Teacher$Test_Tuition_Student_InfoArgs<ExtArgs> = {}>(args?: Subset<T, Teacher$Test_Tuition_Student_InfoArgs<ExtArgs>>): Prisma__Test_Tuition_Student_InfoClient<$Result.GetResult<Prisma.$Test_Tuition_Student_InfoPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    test_tuition<T extends Teacher$test_tuitionArgs<ExtArgs> = {}>(args?: Subset<T, Teacher$test_tuitionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Test_TuitionPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4360,21 +4342,31 @@ export namespace Prisma {
      */
     include?: StudentInclude<ExtArgs> | null
     where?: StudentWhereInput
+    orderBy?: StudentOrderByWithRelationInput | StudentOrderByWithRelationInput[]
+    cursor?: StudentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StudentScalarFieldEnum | StudentScalarFieldEnum[]
   }
 
   /**
-   * Teacher.Test_Tuition_Student_Info
+   * Teacher.test_tuition
    */
-  export type Teacher$Test_Tuition_Student_InfoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Teacher$test_tuitionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Test_Tuition_Student_Info
+     * Select specific fields to fetch from the Test_Tuition
      */
-    select?: Test_Tuition_Student_InfoSelect<ExtArgs> | null
+    select?: Test_TuitionSelect<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: Test_Tuition_Student_InfoInclude<ExtArgs> | null
-    where?: Test_Tuition_Student_InfoWhereInput
+    include?: Test_TuitionInclude<ExtArgs> | null
+    where?: Test_TuitionWhereInput
+    orderBy?: Test_TuitionOrderByWithRelationInput | Test_TuitionOrderByWithRelationInput[]
+    cursor?: Test_TuitionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Test_TuitionScalarFieldEnum | Test_TuitionScalarFieldEnum[]
   }
 
   /**
@@ -4408,39 +4400,49 @@ export namespace Prisma {
     id: number | null
     marks_scored: number | null
     total_marks: number | null
+    teacherId: number | null
+    studentId: number | null
   }
 
   export type Test_TuitionSumAggregateOutputType = {
     id: number | null
     marks_scored: number | null
     total_marks: number | null
+    teacherId: number | null
+    studentId: number | null
   }
 
   export type Test_TuitionMinAggregateOutputType = {
     id: number | null
     name: string | null
-    subject: string | null
+    syllabus: string | null
     date: Date | null
     marks_scored: number | null
     total_marks: number | null
+    teacherId: number | null
+    studentId: number | null
   }
 
   export type Test_TuitionMaxAggregateOutputType = {
     id: number | null
     name: string | null
-    subject: string | null
+    syllabus: string | null
     date: Date | null
     marks_scored: number | null
     total_marks: number | null
+    teacherId: number | null
+    studentId: number | null
   }
 
   export type Test_TuitionCountAggregateOutputType = {
     id: number
     name: number
-    subject: number
+    syllabus: number
     date: number
     marks_scored: number
     total_marks: number
+    teacherId: number
+    studentId: number
     _all: number
   }
 
@@ -4449,39 +4451,49 @@ export namespace Prisma {
     id?: true
     marks_scored?: true
     total_marks?: true
+    teacherId?: true
+    studentId?: true
   }
 
   export type Test_TuitionSumAggregateInputType = {
     id?: true
     marks_scored?: true
     total_marks?: true
+    teacherId?: true
+    studentId?: true
   }
 
   export type Test_TuitionMinAggregateInputType = {
     id?: true
     name?: true
-    subject?: true
+    syllabus?: true
     date?: true
     marks_scored?: true
     total_marks?: true
+    teacherId?: true
+    studentId?: true
   }
 
   export type Test_TuitionMaxAggregateInputType = {
     id?: true
     name?: true
-    subject?: true
+    syllabus?: true
     date?: true
     marks_scored?: true
     total_marks?: true
+    teacherId?: true
+    studentId?: true
   }
 
   export type Test_TuitionCountAggregateInputType = {
     id?: true
     name?: true
-    subject?: true
+    syllabus?: true
     date?: true
     marks_scored?: true
     total_marks?: true
+    teacherId?: true
+    studentId?: true
     _all?: true
   }
 
@@ -4574,10 +4586,12 @@ export namespace Prisma {
   export type Test_TuitionGroupByOutputType = {
     id: number
     name: string
-    subject: string
+    syllabus: string
     date: Date
     marks_scored: number
     total_marks: number
+    teacherId: number
+    studentId: number
     _count: Test_TuitionCountAggregateOutputType | null
     _avg: Test_TuitionAvgAggregateOutputType | null
     _sum: Test_TuitionSumAggregateOutputType | null
@@ -4602,48 +4616,64 @@ export namespace Prisma {
   export type Test_TuitionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    subject?: boolean
+    syllabus?: boolean
     date?: boolean
     marks_scored?: boolean
     total_marks?: boolean
-    test_tuition_student_info?: boolean | Test_Tuition$test_tuition_student_infoArgs<ExtArgs>
+    teacherId?: boolean
+    studentId?: boolean
+    teacher?: boolean | TeacherDefaultArgs<ExtArgs>
+    student?: boolean | StudentDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["test_Tuition"]>
 
   export type Test_TuitionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    subject?: boolean
+    syllabus?: boolean
     date?: boolean
     marks_scored?: boolean
     total_marks?: boolean
+    teacherId?: boolean
+    studentId?: boolean
+    teacher?: boolean | TeacherDefaultArgs<ExtArgs>
+    student?: boolean | StudentDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["test_Tuition"]>
 
   export type Test_TuitionSelectScalar = {
     id?: boolean
     name?: boolean
-    subject?: boolean
+    syllabus?: boolean
     date?: boolean
     marks_scored?: boolean
     total_marks?: boolean
+    teacherId?: boolean
+    studentId?: boolean
   }
 
   export type Test_TuitionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    test_tuition_student_info?: boolean | Test_Tuition$test_tuition_student_infoArgs<ExtArgs>
+    teacher?: boolean | TeacherDefaultArgs<ExtArgs>
+    student?: boolean | StudentDefaultArgs<ExtArgs>
   }
-  export type Test_TuitionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type Test_TuitionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    teacher?: boolean | TeacherDefaultArgs<ExtArgs>
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+  }
 
   export type $Test_TuitionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Test_Tuition"
     objects: {
-      test_tuition_student_info: Prisma.$Test_Tuition_Student_InfoPayload<ExtArgs> | null
+      teacher: Prisma.$TeacherPayload<ExtArgs>
+      student: Prisma.$StudentPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
-      subject: string
+      syllabus: string
       date: Date
       marks_scored: number
       total_marks: number
+      teacherId: number
+      studentId: number
     }, ExtArgs["result"]["test_Tuition"]>
     composites: {}
   }
@@ -5008,7 +5038,8 @@ export namespace Prisma {
    */
   export interface Prisma__Test_TuitionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    test_tuition_student_info<T extends Test_Tuition$test_tuition_student_infoArgs<ExtArgs> = {}>(args?: Subset<T, Test_Tuition$test_tuition_student_infoArgs<ExtArgs>>): Prisma__Test_Tuition_Student_InfoClient<$Result.GetResult<Prisma.$Test_Tuition_Student_InfoPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    teacher<T extends TeacherDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TeacherDefaultArgs<ExtArgs>>): Prisma__TeacherClient<$Result.GetResult<Prisma.$TeacherPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    student<T extends StudentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StudentDefaultArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5040,10 +5071,12 @@ export namespace Prisma {
   interface Test_TuitionFieldRefs {
     readonly id: FieldRef<"Test_Tuition", 'Int'>
     readonly name: FieldRef<"Test_Tuition", 'String'>
-    readonly subject: FieldRef<"Test_Tuition", 'String'>
+    readonly syllabus: FieldRef<"Test_Tuition", 'String'>
     readonly date: FieldRef<"Test_Tuition", 'DateTime'>
     readonly marks_scored: FieldRef<"Test_Tuition", 'Int'>
     readonly total_marks: FieldRef<"Test_Tuition", 'Int'>
+    readonly teacherId: FieldRef<"Test_Tuition", 'Int'>
+    readonly studentId: FieldRef<"Test_Tuition", 'Int'>
   }
     
 
@@ -5265,6 +5298,10 @@ export namespace Prisma {
      */
     data: Test_TuitionCreateManyInput | Test_TuitionCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Test_TuitionIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -5358,21 +5395,6 @@ export namespace Prisma {
   }
 
   /**
-   * Test_Tuition.test_tuition_student_info
-   */
-  export type Test_Tuition$test_tuition_student_infoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Test_Tuition_Student_Info
-     */
-    select?: Test_Tuition_Student_InfoSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Test_Tuition_Student_InfoInclude<ExtArgs> | null
-    where?: Test_Tuition_Student_InfoWhereInput
-  }
-
-  /**
    * Test_Tuition without action
    */
   export type Test_TuitionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5384,969 +5406,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: Test_TuitionInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model Test_Tuition_Student_Info
-   */
-
-  export type AggregateTest_Tuition_Student_Info = {
-    _count: Test_Tuition_Student_InfoCountAggregateOutputType | null
-    _avg: Test_Tuition_Student_InfoAvgAggregateOutputType | null
-    _sum: Test_Tuition_Student_InfoSumAggregateOutputType | null
-    _min: Test_Tuition_Student_InfoMinAggregateOutputType | null
-    _max: Test_Tuition_Student_InfoMaxAggregateOutputType | null
-  }
-
-  export type Test_Tuition_Student_InfoAvgAggregateOutputType = {
-    testId: number | null
-    teacherId: number | null
-    studentId: number | null
-  }
-
-  export type Test_Tuition_Student_InfoSumAggregateOutputType = {
-    testId: number | null
-    teacherId: number | null
-    studentId: number | null
-  }
-
-  export type Test_Tuition_Student_InfoMinAggregateOutputType = {
-    testId: number | null
-    teacherId: number | null
-    studentId: number | null
-  }
-
-  export type Test_Tuition_Student_InfoMaxAggregateOutputType = {
-    testId: number | null
-    teacherId: number | null
-    studentId: number | null
-  }
-
-  export type Test_Tuition_Student_InfoCountAggregateOutputType = {
-    testId: number
-    teacherId: number
-    studentId: number
-    _all: number
-  }
-
-
-  export type Test_Tuition_Student_InfoAvgAggregateInputType = {
-    testId?: true
-    teacherId?: true
-    studentId?: true
-  }
-
-  export type Test_Tuition_Student_InfoSumAggregateInputType = {
-    testId?: true
-    teacherId?: true
-    studentId?: true
-  }
-
-  export type Test_Tuition_Student_InfoMinAggregateInputType = {
-    testId?: true
-    teacherId?: true
-    studentId?: true
-  }
-
-  export type Test_Tuition_Student_InfoMaxAggregateInputType = {
-    testId?: true
-    teacherId?: true
-    studentId?: true
-  }
-
-  export type Test_Tuition_Student_InfoCountAggregateInputType = {
-    testId?: true
-    teacherId?: true
-    studentId?: true
-    _all?: true
-  }
-
-  export type Test_Tuition_Student_InfoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Test_Tuition_Student_Info to aggregate.
-     */
-    where?: Test_Tuition_Student_InfoWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Test_Tuition_Student_Infos to fetch.
-     */
-    orderBy?: Test_Tuition_Student_InfoOrderByWithRelationInput | Test_Tuition_Student_InfoOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: Test_Tuition_Student_InfoWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Test_Tuition_Student_Infos from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Test_Tuition_Student_Infos.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Test_Tuition_Student_Infos
-    **/
-    _count?: true | Test_Tuition_Student_InfoCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: Test_Tuition_Student_InfoAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Test_Tuition_Student_InfoSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: Test_Tuition_Student_InfoMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: Test_Tuition_Student_InfoMaxAggregateInputType
-  }
-
-  export type GetTest_Tuition_Student_InfoAggregateType<T extends Test_Tuition_Student_InfoAggregateArgs> = {
-        [P in keyof T & keyof AggregateTest_Tuition_Student_Info]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateTest_Tuition_Student_Info[P]>
-      : GetScalarType<T[P], AggregateTest_Tuition_Student_Info[P]>
-  }
-
-
-
-
-  export type Test_Tuition_Student_InfoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: Test_Tuition_Student_InfoWhereInput
-    orderBy?: Test_Tuition_Student_InfoOrderByWithAggregationInput | Test_Tuition_Student_InfoOrderByWithAggregationInput[]
-    by: Test_Tuition_Student_InfoScalarFieldEnum[] | Test_Tuition_Student_InfoScalarFieldEnum
-    having?: Test_Tuition_Student_InfoScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: Test_Tuition_Student_InfoCountAggregateInputType | true
-    _avg?: Test_Tuition_Student_InfoAvgAggregateInputType
-    _sum?: Test_Tuition_Student_InfoSumAggregateInputType
-    _min?: Test_Tuition_Student_InfoMinAggregateInputType
-    _max?: Test_Tuition_Student_InfoMaxAggregateInputType
-  }
-
-  export type Test_Tuition_Student_InfoGroupByOutputType = {
-    testId: number
-    teacherId: number
-    studentId: number
-    _count: Test_Tuition_Student_InfoCountAggregateOutputType | null
-    _avg: Test_Tuition_Student_InfoAvgAggregateOutputType | null
-    _sum: Test_Tuition_Student_InfoSumAggregateOutputType | null
-    _min: Test_Tuition_Student_InfoMinAggregateOutputType | null
-    _max: Test_Tuition_Student_InfoMaxAggregateOutputType | null
-  }
-
-  type GetTest_Tuition_Student_InfoGroupByPayload<T extends Test_Tuition_Student_InfoGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<Test_Tuition_Student_InfoGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof Test_Tuition_Student_InfoGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], Test_Tuition_Student_InfoGroupByOutputType[P]>
-            : GetScalarType<T[P], Test_Tuition_Student_InfoGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type Test_Tuition_Student_InfoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    testId?: boolean
-    teacherId?: boolean
-    studentId?: boolean
-    student?: boolean | StudentDefaultArgs<ExtArgs>
-    teacher?: boolean | TeacherDefaultArgs<ExtArgs>
-    tuition_test?: boolean | Test_TuitionDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["test_Tuition_Student_Info"]>
-
-  export type Test_Tuition_Student_InfoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    testId?: boolean
-    teacherId?: boolean
-    studentId?: boolean
-    student?: boolean | StudentDefaultArgs<ExtArgs>
-    teacher?: boolean | TeacherDefaultArgs<ExtArgs>
-    tuition_test?: boolean | Test_TuitionDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["test_Tuition_Student_Info"]>
-
-  export type Test_Tuition_Student_InfoSelectScalar = {
-    testId?: boolean
-    teacherId?: boolean
-    studentId?: boolean
-  }
-
-  export type Test_Tuition_Student_InfoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    student?: boolean | StudentDefaultArgs<ExtArgs>
-    teacher?: boolean | TeacherDefaultArgs<ExtArgs>
-    tuition_test?: boolean | Test_TuitionDefaultArgs<ExtArgs>
-  }
-  export type Test_Tuition_Student_InfoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    student?: boolean | StudentDefaultArgs<ExtArgs>
-    teacher?: boolean | TeacherDefaultArgs<ExtArgs>
-    tuition_test?: boolean | Test_TuitionDefaultArgs<ExtArgs>
-  }
-
-  export type $Test_Tuition_Student_InfoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Test_Tuition_Student_Info"
-    objects: {
-      student: Prisma.$StudentPayload<ExtArgs>
-      teacher: Prisma.$TeacherPayload<ExtArgs>
-      tuition_test: Prisma.$Test_TuitionPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      testId: number
-      teacherId: number
-      studentId: number
-    }, ExtArgs["result"]["test_Tuition_Student_Info"]>
-    composites: {}
-  }
-
-  type Test_Tuition_Student_InfoGetPayload<S extends boolean | null | undefined | Test_Tuition_Student_InfoDefaultArgs> = $Result.GetResult<Prisma.$Test_Tuition_Student_InfoPayload, S>
-
-  type Test_Tuition_Student_InfoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<Test_Tuition_Student_InfoFindManyArgs, 'select' | 'include' | 'distinct'> & {
-      select?: Test_Tuition_Student_InfoCountAggregateInputType | true
-    }
-
-  export interface Test_Tuition_Student_InfoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Test_Tuition_Student_Info'], meta: { name: 'Test_Tuition_Student_Info' } }
-    /**
-     * Find zero or one Test_Tuition_Student_Info that matches the filter.
-     * @param {Test_Tuition_Student_InfoFindUniqueArgs} args - Arguments to find a Test_Tuition_Student_Info
-     * @example
-     * // Get one Test_Tuition_Student_Info
-     * const test_Tuition_Student_Info = await prisma.test_Tuition_Student_Info.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends Test_Tuition_Student_InfoFindUniqueArgs>(args: SelectSubset<T, Test_Tuition_Student_InfoFindUniqueArgs<ExtArgs>>): Prisma__Test_Tuition_Student_InfoClient<$Result.GetResult<Prisma.$Test_Tuition_Student_InfoPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
-
-    /**
-     * Find one Test_Tuition_Student_Info that matches the filter or throw an error with `error.code='P2025'` 
-     * if no matches were found.
-     * @param {Test_Tuition_Student_InfoFindUniqueOrThrowArgs} args - Arguments to find a Test_Tuition_Student_Info
-     * @example
-     * // Get one Test_Tuition_Student_Info
-     * const test_Tuition_Student_Info = await prisma.test_Tuition_Student_Info.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends Test_Tuition_Student_InfoFindUniqueOrThrowArgs>(args: SelectSubset<T, Test_Tuition_Student_InfoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__Test_Tuition_Student_InfoClient<$Result.GetResult<Prisma.$Test_Tuition_Student_InfoPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
-
-    /**
-     * Find the first Test_Tuition_Student_Info that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Test_Tuition_Student_InfoFindFirstArgs} args - Arguments to find a Test_Tuition_Student_Info
-     * @example
-     * // Get one Test_Tuition_Student_Info
-     * const test_Tuition_Student_Info = await prisma.test_Tuition_Student_Info.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends Test_Tuition_Student_InfoFindFirstArgs>(args?: SelectSubset<T, Test_Tuition_Student_InfoFindFirstArgs<ExtArgs>>): Prisma__Test_Tuition_Student_InfoClient<$Result.GetResult<Prisma.$Test_Tuition_Student_InfoPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
-
-    /**
-     * Find the first Test_Tuition_Student_Info that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Test_Tuition_Student_InfoFindFirstOrThrowArgs} args - Arguments to find a Test_Tuition_Student_Info
-     * @example
-     * // Get one Test_Tuition_Student_Info
-     * const test_Tuition_Student_Info = await prisma.test_Tuition_Student_Info.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends Test_Tuition_Student_InfoFindFirstOrThrowArgs>(args?: SelectSubset<T, Test_Tuition_Student_InfoFindFirstOrThrowArgs<ExtArgs>>): Prisma__Test_Tuition_Student_InfoClient<$Result.GetResult<Prisma.$Test_Tuition_Student_InfoPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
-
-    /**
-     * Find zero or more Test_Tuition_Student_Infos that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Test_Tuition_Student_InfoFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Test_Tuition_Student_Infos
-     * const test_Tuition_Student_Infos = await prisma.test_Tuition_Student_Info.findMany()
-     * 
-     * // Get first 10 Test_Tuition_Student_Infos
-     * const test_Tuition_Student_Infos = await prisma.test_Tuition_Student_Info.findMany({ take: 10 })
-     * 
-     * // Only select the `testId`
-     * const test_Tuition_Student_InfoWithTestIdOnly = await prisma.test_Tuition_Student_Info.findMany({ select: { testId: true } })
-     * 
-     */
-    findMany<T extends Test_Tuition_Student_InfoFindManyArgs>(args?: SelectSubset<T, Test_Tuition_Student_InfoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Test_Tuition_Student_InfoPayload<ExtArgs>, T, "findMany">>
-
-    /**
-     * Create a Test_Tuition_Student_Info.
-     * @param {Test_Tuition_Student_InfoCreateArgs} args - Arguments to create a Test_Tuition_Student_Info.
-     * @example
-     * // Create one Test_Tuition_Student_Info
-     * const Test_Tuition_Student_Info = await prisma.test_Tuition_Student_Info.create({
-     *   data: {
-     *     // ... data to create a Test_Tuition_Student_Info
-     *   }
-     * })
-     * 
-     */
-    create<T extends Test_Tuition_Student_InfoCreateArgs>(args: SelectSubset<T, Test_Tuition_Student_InfoCreateArgs<ExtArgs>>): Prisma__Test_Tuition_Student_InfoClient<$Result.GetResult<Prisma.$Test_Tuition_Student_InfoPayload<ExtArgs>, T, "create">, never, ExtArgs>
-
-    /**
-     * Create many Test_Tuition_Student_Infos.
-     * @param {Test_Tuition_Student_InfoCreateManyArgs} args - Arguments to create many Test_Tuition_Student_Infos.
-     * @example
-     * // Create many Test_Tuition_Student_Infos
-     * const test_Tuition_Student_Info = await prisma.test_Tuition_Student_Info.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends Test_Tuition_Student_InfoCreateManyArgs>(args?: SelectSubset<T, Test_Tuition_Student_InfoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Test_Tuition_Student_Infos and returns the data saved in the database.
-     * @param {Test_Tuition_Student_InfoCreateManyAndReturnArgs} args - Arguments to create many Test_Tuition_Student_Infos.
-     * @example
-     * // Create many Test_Tuition_Student_Infos
-     * const test_Tuition_Student_Info = await prisma.test_Tuition_Student_Info.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Test_Tuition_Student_Infos and only return the `testId`
-     * const test_Tuition_Student_InfoWithTestIdOnly = await prisma.test_Tuition_Student_Info.createManyAndReturn({ 
-     *   select: { testId: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends Test_Tuition_Student_InfoCreateManyAndReturnArgs>(args?: SelectSubset<T, Test_Tuition_Student_InfoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$Test_Tuition_Student_InfoPayload<ExtArgs>, T, "createManyAndReturn">>
-
-    /**
-     * Delete a Test_Tuition_Student_Info.
-     * @param {Test_Tuition_Student_InfoDeleteArgs} args - Arguments to delete one Test_Tuition_Student_Info.
-     * @example
-     * // Delete one Test_Tuition_Student_Info
-     * const Test_Tuition_Student_Info = await prisma.test_Tuition_Student_Info.delete({
-     *   where: {
-     *     // ... filter to delete one Test_Tuition_Student_Info
-     *   }
-     * })
-     * 
-     */
-    delete<T extends Test_Tuition_Student_InfoDeleteArgs>(args: SelectSubset<T, Test_Tuition_Student_InfoDeleteArgs<ExtArgs>>): Prisma__Test_Tuition_Student_InfoClient<$Result.GetResult<Prisma.$Test_Tuition_Student_InfoPayload<ExtArgs>, T, "delete">, never, ExtArgs>
-
-    /**
-     * Update one Test_Tuition_Student_Info.
-     * @param {Test_Tuition_Student_InfoUpdateArgs} args - Arguments to update one Test_Tuition_Student_Info.
-     * @example
-     * // Update one Test_Tuition_Student_Info
-     * const test_Tuition_Student_Info = await prisma.test_Tuition_Student_Info.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends Test_Tuition_Student_InfoUpdateArgs>(args: SelectSubset<T, Test_Tuition_Student_InfoUpdateArgs<ExtArgs>>): Prisma__Test_Tuition_Student_InfoClient<$Result.GetResult<Prisma.$Test_Tuition_Student_InfoPayload<ExtArgs>, T, "update">, never, ExtArgs>
-
-    /**
-     * Delete zero or more Test_Tuition_Student_Infos.
-     * @param {Test_Tuition_Student_InfoDeleteManyArgs} args - Arguments to filter Test_Tuition_Student_Infos to delete.
-     * @example
-     * // Delete a few Test_Tuition_Student_Infos
-     * const { count } = await prisma.test_Tuition_Student_Info.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends Test_Tuition_Student_InfoDeleteManyArgs>(args?: SelectSubset<T, Test_Tuition_Student_InfoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Test_Tuition_Student_Infos.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Test_Tuition_Student_InfoUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Test_Tuition_Student_Infos
-     * const test_Tuition_Student_Info = await prisma.test_Tuition_Student_Info.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends Test_Tuition_Student_InfoUpdateManyArgs>(args: SelectSubset<T, Test_Tuition_Student_InfoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one Test_Tuition_Student_Info.
-     * @param {Test_Tuition_Student_InfoUpsertArgs} args - Arguments to update or create a Test_Tuition_Student_Info.
-     * @example
-     * // Update or create a Test_Tuition_Student_Info
-     * const test_Tuition_Student_Info = await prisma.test_Tuition_Student_Info.upsert({
-     *   create: {
-     *     // ... data to create a Test_Tuition_Student_Info
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Test_Tuition_Student_Info we want to update
-     *   }
-     * })
-     */
-    upsert<T extends Test_Tuition_Student_InfoUpsertArgs>(args: SelectSubset<T, Test_Tuition_Student_InfoUpsertArgs<ExtArgs>>): Prisma__Test_Tuition_Student_InfoClient<$Result.GetResult<Prisma.$Test_Tuition_Student_InfoPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
-
-
-    /**
-     * Count the number of Test_Tuition_Student_Infos.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Test_Tuition_Student_InfoCountArgs} args - Arguments to filter Test_Tuition_Student_Infos to count.
-     * @example
-     * // Count the number of Test_Tuition_Student_Infos
-     * const count = await prisma.test_Tuition_Student_Info.count({
-     *   where: {
-     *     // ... the filter for the Test_Tuition_Student_Infos we want to count
-     *   }
-     * })
-    **/
-    count<T extends Test_Tuition_Student_InfoCountArgs>(
-      args?: Subset<T, Test_Tuition_Student_InfoCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], Test_Tuition_Student_InfoCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Test_Tuition_Student_Info.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Test_Tuition_Student_InfoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends Test_Tuition_Student_InfoAggregateArgs>(args: Subset<T, Test_Tuition_Student_InfoAggregateArgs>): Prisma.PrismaPromise<GetTest_Tuition_Student_InfoAggregateType<T>>
-
-    /**
-     * Group by Test_Tuition_Student_Info.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {Test_Tuition_Student_InfoGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends Test_Tuition_Student_InfoGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: Test_Tuition_Student_InfoGroupByArgs['orderBy'] }
-        : { orderBy?: Test_Tuition_Student_InfoGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, Test_Tuition_Student_InfoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTest_Tuition_Student_InfoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Test_Tuition_Student_Info model
-   */
-  readonly fields: Test_Tuition_Student_InfoFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Test_Tuition_Student_Info.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__Test_Tuition_Student_InfoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    student<T extends StudentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StudentDefaultArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
-    teacher<T extends TeacherDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TeacherDefaultArgs<ExtArgs>>): Prisma__TeacherClient<$Result.GetResult<Prisma.$TeacherPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
-    tuition_test<T extends Test_TuitionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, Test_TuitionDefaultArgs<ExtArgs>>): Prisma__Test_TuitionClient<$Result.GetResult<Prisma.$Test_TuitionPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Test_Tuition_Student_Info model
-   */ 
-  interface Test_Tuition_Student_InfoFieldRefs {
-    readonly testId: FieldRef<"Test_Tuition_Student_Info", 'Int'>
-    readonly teacherId: FieldRef<"Test_Tuition_Student_Info", 'Int'>
-    readonly studentId: FieldRef<"Test_Tuition_Student_Info", 'Int'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Test_Tuition_Student_Info findUnique
-   */
-  export type Test_Tuition_Student_InfoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Test_Tuition_Student_Info
-     */
-    select?: Test_Tuition_Student_InfoSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Test_Tuition_Student_InfoInclude<ExtArgs> | null
-    /**
-     * Filter, which Test_Tuition_Student_Info to fetch.
-     */
-    where: Test_Tuition_Student_InfoWhereUniqueInput
-  }
-
-  /**
-   * Test_Tuition_Student_Info findUniqueOrThrow
-   */
-  export type Test_Tuition_Student_InfoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Test_Tuition_Student_Info
-     */
-    select?: Test_Tuition_Student_InfoSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Test_Tuition_Student_InfoInclude<ExtArgs> | null
-    /**
-     * Filter, which Test_Tuition_Student_Info to fetch.
-     */
-    where: Test_Tuition_Student_InfoWhereUniqueInput
-  }
-
-  /**
-   * Test_Tuition_Student_Info findFirst
-   */
-  export type Test_Tuition_Student_InfoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Test_Tuition_Student_Info
-     */
-    select?: Test_Tuition_Student_InfoSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Test_Tuition_Student_InfoInclude<ExtArgs> | null
-    /**
-     * Filter, which Test_Tuition_Student_Info to fetch.
-     */
-    where?: Test_Tuition_Student_InfoWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Test_Tuition_Student_Infos to fetch.
-     */
-    orderBy?: Test_Tuition_Student_InfoOrderByWithRelationInput | Test_Tuition_Student_InfoOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Test_Tuition_Student_Infos.
-     */
-    cursor?: Test_Tuition_Student_InfoWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Test_Tuition_Student_Infos from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Test_Tuition_Student_Infos.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Test_Tuition_Student_Infos.
-     */
-    distinct?: Test_Tuition_Student_InfoScalarFieldEnum | Test_Tuition_Student_InfoScalarFieldEnum[]
-  }
-
-  /**
-   * Test_Tuition_Student_Info findFirstOrThrow
-   */
-  export type Test_Tuition_Student_InfoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Test_Tuition_Student_Info
-     */
-    select?: Test_Tuition_Student_InfoSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Test_Tuition_Student_InfoInclude<ExtArgs> | null
-    /**
-     * Filter, which Test_Tuition_Student_Info to fetch.
-     */
-    where?: Test_Tuition_Student_InfoWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Test_Tuition_Student_Infos to fetch.
-     */
-    orderBy?: Test_Tuition_Student_InfoOrderByWithRelationInput | Test_Tuition_Student_InfoOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Test_Tuition_Student_Infos.
-     */
-    cursor?: Test_Tuition_Student_InfoWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Test_Tuition_Student_Infos from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Test_Tuition_Student_Infos.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Test_Tuition_Student_Infos.
-     */
-    distinct?: Test_Tuition_Student_InfoScalarFieldEnum | Test_Tuition_Student_InfoScalarFieldEnum[]
-  }
-
-  /**
-   * Test_Tuition_Student_Info findMany
-   */
-  export type Test_Tuition_Student_InfoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Test_Tuition_Student_Info
-     */
-    select?: Test_Tuition_Student_InfoSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Test_Tuition_Student_InfoInclude<ExtArgs> | null
-    /**
-     * Filter, which Test_Tuition_Student_Infos to fetch.
-     */
-    where?: Test_Tuition_Student_InfoWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Test_Tuition_Student_Infos to fetch.
-     */
-    orderBy?: Test_Tuition_Student_InfoOrderByWithRelationInput | Test_Tuition_Student_InfoOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Test_Tuition_Student_Infos.
-     */
-    cursor?: Test_Tuition_Student_InfoWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Test_Tuition_Student_Infos from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Test_Tuition_Student_Infos.
-     */
-    skip?: number
-    distinct?: Test_Tuition_Student_InfoScalarFieldEnum | Test_Tuition_Student_InfoScalarFieldEnum[]
-  }
-
-  /**
-   * Test_Tuition_Student_Info create
-   */
-  export type Test_Tuition_Student_InfoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Test_Tuition_Student_Info
-     */
-    select?: Test_Tuition_Student_InfoSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Test_Tuition_Student_InfoInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Test_Tuition_Student_Info.
-     */
-    data: XOR<Test_Tuition_Student_InfoCreateInput, Test_Tuition_Student_InfoUncheckedCreateInput>
-  }
-
-  /**
-   * Test_Tuition_Student_Info createMany
-   */
-  export type Test_Tuition_Student_InfoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Test_Tuition_Student_Infos.
-     */
-    data: Test_Tuition_Student_InfoCreateManyInput | Test_Tuition_Student_InfoCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Test_Tuition_Student_Info createManyAndReturn
-   */
-  export type Test_Tuition_Student_InfoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Test_Tuition_Student_Info
-     */
-    select?: Test_Tuition_Student_InfoSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * The data used to create many Test_Tuition_Student_Infos.
-     */
-    data: Test_Tuition_Student_InfoCreateManyInput | Test_Tuition_Student_InfoCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Test_Tuition_Student_InfoIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Test_Tuition_Student_Info update
-   */
-  export type Test_Tuition_Student_InfoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Test_Tuition_Student_Info
-     */
-    select?: Test_Tuition_Student_InfoSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Test_Tuition_Student_InfoInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Test_Tuition_Student_Info.
-     */
-    data: XOR<Test_Tuition_Student_InfoUpdateInput, Test_Tuition_Student_InfoUncheckedUpdateInput>
-    /**
-     * Choose, which Test_Tuition_Student_Info to update.
-     */
-    where: Test_Tuition_Student_InfoWhereUniqueInput
-  }
-
-  /**
-   * Test_Tuition_Student_Info updateMany
-   */
-  export type Test_Tuition_Student_InfoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Test_Tuition_Student_Infos.
-     */
-    data: XOR<Test_Tuition_Student_InfoUpdateManyMutationInput, Test_Tuition_Student_InfoUncheckedUpdateManyInput>
-    /**
-     * Filter which Test_Tuition_Student_Infos to update
-     */
-    where?: Test_Tuition_Student_InfoWhereInput
-  }
-
-  /**
-   * Test_Tuition_Student_Info upsert
-   */
-  export type Test_Tuition_Student_InfoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Test_Tuition_Student_Info
-     */
-    select?: Test_Tuition_Student_InfoSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Test_Tuition_Student_InfoInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Test_Tuition_Student_Info to update in case it exists.
-     */
-    where: Test_Tuition_Student_InfoWhereUniqueInput
-    /**
-     * In case the Test_Tuition_Student_Info found by the `where` argument doesn't exist, create a new Test_Tuition_Student_Info with this data.
-     */
-    create: XOR<Test_Tuition_Student_InfoCreateInput, Test_Tuition_Student_InfoUncheckedCreateInput>
-    /**
-     * In case the Test_Tuition_Student_Info was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<Test_Tuition_Student_InfoUpdateInput, Test_Tuition_Student_InfoUncheckedUpdateInput>
-  }
-
-  /**
-   * Test_Tuition_Student_Info delete
-   */
-  export type Test_Tuition_Student_InfoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Test_Tuition_Student_Info
-     */
-    select?: Test_Tuition_Student_InfoSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Test_Tuition_Student_InfoInclude<ExtArgs> | null
-    /**
-     * Filter which Test_Tuition_Student_Info to delete.
-     */
-    where: Test_Tuition_Student_InfoWhereUniqueInput
-  }
-
-  /**
-   * Test_Tuition_Student_Info deleteMany
-   */
-  export type Test_Tuition_Student_InfoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Test_Tuition_Student_Infos to delete
-     */
-    where?: Test_Tuition_Student_InfoWhereInput
-  }
-
-  /**
-   * Test_Tuition_Student_Info without action
-   */
-  export type Test_Tuition_Student_InfoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Test_Tuition_Student_Info
-     */
-    select?: Test_Tuition_Student_InfoSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Test_Tuition_Student_InfoInclude<ExtArgs> | null
   }
 
 
@@ -7386,6 +6445,7 @@ export namespace Prisma {
     lastName: 'lastName',
     imageUrl: 'imageUrl',
     clerkUserId: 'clerkUserId',
+    role: 'role',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -7420,22 +6480,15 @@ export namespace Prisma {
   export const Test_TuitionScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    subject: 'subject',
+    syllabus: 'syllabus',
     date: 'date',
     marks_scored: 'marks_scored',
-    total_marks: 'total_marks'
-  };
-
-  export type Test_TuitionScalarFieldEnum = (typeof Test_TuitionScalarFieldEnum)[keyof typeof Test_TuitionScalarFieldEnum]
-
-
-  export const Test_Tuition_Student_InfoScalarFieldEnum: {
-    testId: 'testId',
+    total_marks: 'total_marks',
     teacherId: 'teacherId',
     studentId: 'studentId'
   };
 
-  export type Test_Tuition_Student_InfoScalarFieldEnum = (typeof Test_Tuition_Student_InfoScalarFieldEnum)[keyof typeof Test_Tuition_Student_InfoScalarFieldEnum]
+  export type Test_TuitionScalarFieldEnum = (typeof Test_TuitionScalarFieldEnum)[keyof typeof Test_TuitionScalarFieldEnum]
 
 
   export const Test_SchoolScalarFieldEnum: {
@@ -7557,6 +6610,7 @@ export namespace Prisma {
     lastName?: StringNullableFilter<"User"> | string | null
     imageUrl?: StringNullableFilter<"User"> | string | null
     clerkUserId?: StringFilter<"User"> | string
+    role?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     Student?: XOR<StudentNullableRelationFilter, StudentWhereInput> | null
@@ -7570,6 +6624,7 @@ export namespace Prisma {
     lastName?: SortOrderInput | SortOrder
     imageUrl?: SortOrderInput | SortOrder
     clerkUserId?: SortOrder
+    role?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     Student?: StudentOrderByWithRelationInput
@@ -7586,6 +6641,7 @@ export namespace Prisma {
     firstName?: StringNullableFilter<"User"> | string | null
     lastName?: StringNullableFilter<"User"> | string | null
     imageUrl?: StringNullableFilter<"User"> | string | null
+    role?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     Student?: XOR<StudentNullableRelationFilter, StudentWhereInput> | null
@@ -7599,6 +6655,7 @@ export namespace Prisma {
     lastName?: SortOrderInput | SortOrder
     imageUrl?: SortOrderInput | SortOrder
     clerkUserId?: SortOrder
+    role?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -7618,6 +6675,7 @@ export namespace Prisma {
     lastName?: StringNullableWithAggregatesFilter<"User"> | string | null
     imageUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
     clerkUserId?: StringWithAggregatesFilter<"User"> | string
+    role?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -7637,7 +6695,7 @@ export namespace Prisma {
     teacher?: XOR<TeacherRelationFilter, TeacherWhereInput>
     user?: XOR<UserRelationFilter, UserWhereInput>
     school_tests?: Test_SchoolListRelationFilter
-    test_tuition_student_info?: XOR<Test_Tuition_Student_InfoNullableRelationFilter, Test_Tuition_Student_InfoWhereInput> | null
+    tuition_tests?: Test_TuitionListRelationFilter
   }
 
   export type StudentOrderByWithRelationInput = {
@@ -7652,13 +6710,12 @@ export namespace Prisma {
     teacher?: TeacherOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
     school_tests?: Test_SchoolOrderByRelationAggregateInput
-    test_tuition_student_info?: Test_Tuition_Student_InfoOrderByWithRelationInput
+    tuition_tests?: Test_TuitionOrderByRelationAggregateInput
   }
 
   export type StudentWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     userId?: number
-    teacherId?: number
     AND?: StudentWhereInput | StudentWhereInput[]
     OR?: StudentWhereInput[]
     NOT?: StudentWhereInput | StudentWhereInput[]
@@ -7667,11 +6724,12 @@ export namespace Prisma {
     board?: StringNullableFilter<"Student"> | string | null
     createdAt?: DateTimeFilter<"Student"> | Date | string
     updatedAt?: DateTimeFilter<"Student"> | Date | string
+    teacherId?: IntFilter<"Student"> | number
     teacher?: XOR<TeacherRelationFilter, TeacherWhereInput>
     user?: XOR<UserRelationFilter, UserWhereInput>
     school_tests?: Test_SchoolListRelationFilter
-    test_tuition_student_info?: XOR<Test_Tuition_Student_InfoNullableRelationFilter, Test_Tuition_Student_InfoWhereInput> | null
-  }, "id" | "userId" | "teacherId">
+    tuition_tests?: Test_TuitionListRelationFilter
+  }, "id" | "userId">
 
   export type StudentOrderByWithAggregationInput = {
     id?: SortOrder
@@ -7711,9 +6769,9 @@ export namespace Prisma {
     userId?: IntFilter<"Teacher"> | number
     createdAt?: DateTimeFilter<"Teacher"> | Date | string
     updatedAt?: DateTimeFilter<"Teacher"> | Date | string
-    Student?: XOR<StudentNullableRelationFilter, StudentWhereInput> | null
+    Student?: StudentListRelationFilter
     user?: XOR<UserRelationFilter, UserWhereInput>
-    Test_Tuition_Student_Info?: XOR<Test_Tuition_Student_InfoNullableRelationFilter, Test_Tuition_Student_InfoWhereInput> | null
+    test_tuition?: Test_TuitionListRelationFilter
   }
 
   export type TeacherOrderByWithRelationInput = {
@@ -7721,9 +6779,9 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    Student?: StudentOrderByWithRelationInput
+    Student?: StudentOrderByRelationAggregateInput
     user?: UserOrderByWithRelationInput
-    Test_Tuition_Student_Info?: Test_Tuition_Student_InfoOrderByWithRelationInput
+    test_tuition?: Test_TuitionOrderByRelationAggregateInput
   }
 
   export type TeacherWhereUniqueInput = Prisma.AtLeast<{
@@ -7734,9 +6792,9 @@ export namespace Prisma {
     NOT?: TeacherWhereInput | TeacherWhereInput[]
     createdAt?: DateTimeFilter<"Teacher"> | Date | string
     updatedAt?: DateTimeFilter<"Teacher"> | Date | string
-    Student?: XOR<StudentNullableRelationFilter, StudentWhereInput> | null
+    Student?: StudentListRelationFilter
     user?: XOR<UserRelationFilter, UserWhereInput>
-    Test_Tuition_Student_Info?: XOR<Test_Tuition_Student_InfoNullableRelationFilter, Test_Tuition_Student_InfoWhereInput> | null
+    test_tuition?: Test_TuitionListRelationFilter
   }, "id" | "userId">
 
   export type TeacherOrderByWithAggregationInput = {
@@ -7767,21 +6825,27 @@ export namespace Prisma {
     NOT?: Test_TuitionWhereInput | Test_TuitionWhereInput[]
     id?: IntFilter<"Test_Tuition"> | number
     name?: StringFilter<"Test_Tuition"> | string
-    subject?: StringFilter<"Test_Tuition"> | string
+    syllabus?: StringFilter<"Test_Tuition"> | string
     date?: DateTimeFilter<"Test_Tuition"> | Date | string
     marks_scored?: IntFilter<"Test_Tuition"> | number
     total_marks?: IntFilter<"Test_Tuition"> | number
-    test_tuition_student_info?: XOR<Test_Tuition_Student_InfoNullableRelationFilter, Test_Tuition_Student_InfoWhereInput> | null
+    teacherId?: IntFilter<"Test_Tuition"> | number
+    studentId?: IntFilter<"Test_Tuition"> | number
+    teacher?: XOR<TeacherRelationFilter, TeacherWhereInput>
+    student?: XOR<StudentRelationFilter, StudentWhereInput>
   }
 
   export type Test_TuitionOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    subject?: SortOrder
+    syllabus?: SortOrder
     date?: SortOrder
     marks_scored?: SortOrder
     total_marks?: SortOrder
-    test_tuition_student_info?: Test_Tuition_Student_InfoOrderByWithRelationInput
+    teacherId?: SortOrder
+    studentId?: SortOrder
+    teacher?: TeacherOrderByWithRelationInput
+    student?: StudentOrderByWithRelationInput
   }
 
   export type Test_TuitionWhereUniqueInput = Prisma.AtLeast<{
@@ -7790,20 +6854,25 @@ export namespace Prisma {
     OR?: Test_TuitionWhereInput[]
     NOT?: Test_TuitionWhereInput | Test_TuitionWhereInput[]
     name?: StringFilter<"Test_Tuition"> | string
-    subject?: StringFilter<"Test_Tuition"> | string
+    syllabus?: StringFilter<"Test_Tuition"> | string
     date?: DateTimeFilter<"Test_Tuition"> | Date | string
     marks_scored?: IntFilter<"Test_Tuition"> | number
     total_marks?: IntFilter<"Test_Tuition"> | number
-    test_tuition_student_info?: XOR<Test_Tuition_Student_InfoNullableRelationFilter, Test_Tuition_Student_InfoWhereInput> | null
+    teacherId?: IntFilter<"Test_Tuition"> | number
+    studentId?: IntFilter<"Test_Tuition"> | number
+    teacher?: XOR<TeacherRelationFilter, TeacherWhereInput>
+    student?: XOR<StudentRelationFilter, StudentWhereInput>
   }, "id">
 
   export type Test_TuitionOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    subject?: SortOrder
+    syllabus?: SortOrder
     date?: SortOrder
     marks_scored?: SortOrder
     total_marks?: SortOrder
+    teacherId?: SortOrder
+    studentId?: SortOrder
     _count?: Test_TuitionCountOrderByAggregateInput
     _avg?: Test_TuitionAvgOrderByAggregateInput
     _max?: Test_TuitionMaxOrderByAggregateInput
@@ -7817,63 +6886,12 @@ export namespace Prisma {
     NOT?: Test_TuitionScalarWhereWithAggregatesInput | Test_TuitionScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Test_Tuition"> | number
     name?: StringWithAggregatesFilter<"Test_Tuition"> | string
-    subject?: StringWithAggregatesFilter<"Test_Tuition"> | string
+    syllabus?: StringWithAggregatesFilter<"Test_Tuition"> | string
     date?: DateTimeWithAggregatesFilter<"Test_Tuition"> | Date | string
     marks_scored?: IntWithAggregatesFilter<"Test_Tuition"> | number
     total_marks?: IntWithAggregatesFilter<"Test_Tuition"> | number
-  }
-
-  export type Test_Tuition_Student_InfoWhereInput = {
-    AND?: Test_Tuition_Student_InfoWhereInput | Test_Tuition_Student_InfoWhereInput[]
-    OR?: Test_Tuition_Student_InfoWhereInput[]
-    NOT?: Test_Tuition_Student_InfoWhereInput | Test_Tuition_Student_InfoWhereInput[]
-    testId?: IntFilter<"Test_Tuition_Student_Info"> | number
-    teacherId?: IntFilter<"Test_Tuition_Student_Info"> | number
-    studentId?: IntFilter<"Test_Tuition_Student_Info"> | number
-    student?: XOR<StudentRelationFilter, StudentWhereInput>
-    teacher?: XOR<TeacherRelationFilter, TeacherWhereInput>
-    tuition_test?: XOR<Test_TuitionRelationFilter, Test_TuitionWhereInput>
-  }
-
-  export type Test_Tuition_Student_InfoOrderByWithRelationInput = {
-    testId?: SortOrder
-    teacherId?: SortOrder
-    studentId?: SortOrder
-    student?: StudentOrderByWithRelationInput
-    teacher?: TeacherOrderByWithRelationInput
-    tuition_test?: Test_TuitionOrderByWithRelationInput
-  }
-
-  export type Test_Tuition_Student_InfoWhereUniqueInput = Prisma.AtLeast<{
-    testId?: number
-    teacherId?: number
-    studentId?: number
-    AND?: Test_Tuition_Student_InfoWhereInput | Test_Tuition_Student_InfoWhereInput[]
-    OR?: Test_Tuition_Student_InfoWhereInput[]
-    NOT?: Test_Tuition_Student_InfoWhereInput | Test_Tuition_Student_InfoWhereInput[]
-    student?: XOR<StudentRelationFilter, StudentWhereInput>
-    teacher?: XOR<TeacherRelationFilter, TeacherWhereInput>
-    tuition_test?: XOR<Test_TuitionRelationFilter, Test_TuitionWhereInput>
-  }, "testId" | "teacherId" | "studentId">
-
-  export type Test_Tuition_Student_InfoOrderByWithAggregationInput = {
-    testId?: SortOrder
-    teacherId?: SortOrder
-    studentId?: SortOrder
-    _count?: Test_Tuition_Student_InfoCountOrderByAggregateInput
-    _avg?: Test_Tuition_Student_InfoAvgOrderByAggregateInput
-    _max?: Test_Tuition_Student_InfoMaxOrderByAggregateInput
-    _min?: Test_Tuition_Student_InfoMinOrderByAggregateInput
-    _sum?: Test_Tuition_Student_InfoSumOrderByAggregateInput
-  }
-
-  export type Test_Tuition_Student_InfoScalarWhereWithAggregatesInput = {
-    AND?: Test_Tuition_Student_InfoScalarWhereWithAggregatesInput | Test_Tuition_Student_InfoScalarWhereWithAggregatesInput[]
-    OR?: Test_Tuition_Student_InfoScalarWhereWithAggregatesInput[]
-    NOT?: Test_Tuition_Student_InfoScalarWhereWithAggregatesInput | Test_Tuition_Student_InfoScalarWhereWithAggregatesInput[]
-    testId?: IntWithAggregatesFilter<"Test_Tuition_Student_Info"> | number
-    teacherId?: IntWithAggregatesFilter<"Test_Tuition_Student_Info"> | number
-    studentId?: IntWithAggregatesFilter<"Test_Tuition_Student_Info"> | number
+    teacherId?: IntWithAggregatesFilter<"Test_Tuition"> | number
+    studentId?: IntWithAggregatesFilter<"Test_Tuition"> | number
   }
 
   export type Test_SchoolWhereInput = {
@@ -7954,6 +6972,7 @@ export namespace Prisma {
     lastName?: string | null
     imageUrl?: string | null
     clerkUserId: string
+    role?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     Student?: StudentCreateNestedOneWithoutUserInput
@@ -7967,6 +6986,7 @@ export namespace Prisma {
     lastName?: string | null
     imageUrl?: string | null
     clerkUserId: string
+    role?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     Student?: StudentUncheckedCreateNestedOneWithoutUserInput
@@ -7979,6 +6999,7 @@ export namespace Prisma {
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     clerkUserId?: StringFieldUpdateOperationsInput | string
+    role?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Student?: StudentUpdateOneWithoutUserNestedInput
@@ -7992,6 +7013,7 @@ export namespace Prisma {
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     clerkUserId?: StringFieldUpdateOperationsInput | string
+    role?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Student?: StudentUncheckedUpdateOneWithoutUserNestedInput
@@ -8005,6 +7027,7 @@ export namespace Prisma {
     lastName?: string | null
     imageUrl?: string | null
     clerkUserId: string
+    role?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -8015,6 +7038,7 @@ export namespace Prisma {
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     clerkUserId?: StringFieldUpdateOperationsInput | string
+    role?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8026,6 +7050,7 @@ export namespace Prisma {
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     clerkUserId?: StringFieldUpdateOperationsInput | string
+    role?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8039,7 +7064,7 @@ export namespace Prisma {
     teacher: TeacherCreateNestedOneWithoutStudentInput
     user: UserCreateNestedOneWithoutStudentInput
     school_tests?: Test_SchoolCreateNestedManyWithoutStudentInput
-    test_tuition_student_info?: Test_Tuition_Student_InfoCreateNestedOneWithoutStudentInput
+    tuition_tests?: Test_TuitionCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateInput = {
@@ -8052,7 +7077,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     teacherId: number
     school_tests?: Test_SchoolUncheckedCreateNestedManyWithoutStudentInput
-    test_tuition_student_info?: Test_Tuition_Student_InfoUncheckedCreateNestedOneWithoutStudentInput
+    tuition_tests?: Test_TuitionUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUpdateInput = {
@@ -8064,7 +7089,7 @@ export namespace Prisma {
     teacher?: TeacherUpdateOneRequiredWithoutStudentNestedInput
     user?: UserUpdateOneRequiredWithoutStudentNestedInput
     school_tests?: Test_SchoolUpdateManyWithoutStudentNestedInput
-    test_tuition_student_info?: Test_Tuition_Student_InfoUpdateOneWithoutStudentNestedInput
+    tuition_tests?: Test_TuitionUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateInput = {
@@ -8077,7 +7102,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     teacherId?: IntFieldUpdateOperationsInput | number
     school_tests?: Test_SchoolUncheckedUpdateManyWithoutStudentNestedInput
-    test_tuition_student_info?: Test_Tuition_Student_InfoUncheckedUpdateOneWithoutStudentNestedInput
+    tuition_tests?: Test_TuitionUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentCreateManyInput = {
@@ -8113,9 +7138,9 @@ export namespace Prisma {
   export type TeacherCreateInput = {
     createdAt?: Date | string
     updatedAt?: Date | string
-    Student?: StudentCreateNestedOneWithoutTeacherInput
+    Student?: StudentCreateNestedManyWithoutTeacherInput
     user: UserCreateNestedOneWithoutTeacherInput
-    Test_Tuition_Student_Info?: Test_Tuition_Student_InfoCreateNestedOneWithoutTeacherInput
+    test_tuition?: Test_TuitionCreateNestedManyWithoutTeacherInput
   }
 
   export type TeacherUncheckedCreateInput = {
@@ -8123,16 +7148,16 @@ export namespace Prisma {
     userId: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    Student?: StudentUncheckedCreateNestedOneWithoutTeacherInput
-    Test_Tuition_Student_Info?: Test_Tuition_Student_InfoUncheckedCreateNestedOneWithoutTeacherInput
+    Student?: StudentUncheckedCreateNestedManyWithoutTeacherInput
+    test_tuition?: Test_TuitionUncheckedCreateNestedManyWithoutTeacherInput
   }
 
   export type TeacherUpdateInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Student?: StudentUpdateOneWithoutTeacherNestedInput
+    Student?: StudentUpdateManyWithoutTeacherNestedInput
     user?: UserUpdateOneRequiredWithoutTeacherNestedInput
-    Test_Tuition_Student_Info?: Test_Tuition_Student_InfoUpdateOneWithoutTeacherNestedInput
+    test_tuition?: Test_TuitionUpdateManyWithoutTeacherNestedInput
   }
 
   export type TeacherUncheckedUpdateInput = {
@@ -8140,8 +7165,8 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Student?: StudentUncheckedUpdateOneWithoutTeacherNestedInput
-    Test_Tuition_Student_Info?: Test_Tuition_Student_InfoUncheckedUpdateOneWithoutTeacherNestedInput
+    Student?: StudentUncheckedUpdateManyWithoutTeacherNestedInput
+    test_tuition?: Test_TuitionUncheckedUpdateManyWithoutTeacherNestedInput
   }
 
   export type TeacherCreateManyInput = {
@@ -8165,54 +7190,60 @@ export namespace Prisma {
 
   export type Test_TuitionCreateInput = {
     name: string
-    subject: string
+    syllabus: string
     date: Date | string
     marks_scored: number
     total_marks: number
-    test_tuition_student_info?: Test_Tuition_Student_InfoCreateNestedOneWithoutTuition_testInput
+    teacher: TeacherCreateNestedOneWithoutTest_tuitionInput
+    student: StudentCreateNestedOneWithoutTuition_testsInput
   }
 
   export type Test_TuitionUncheckedCreateInput = {
     id?: number
     name: string
-    subject: string
+    syllabus: string
     date: Date | string
     marks_scored: number
     total_marks: number
-    test_tuition_student_info?: Test_Tuition_Student_InfoUncheckedCreateNestedOneWithoutTuition_testInput
+    teacherId: number
+    studentId: number
   }
 
   export type Test_TuitionUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    subject?: StringFieldUpdateOperationsInput | string
+    syllabus?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     marks_scored?: IntFieldUpdateOperationsInput | number
     total_marks?: IntFieldUpdateOperationsInput | number
-    test_tuition_student_info?: Test_Tuition_Student_InfoUpdateOneWithoutTuition_testNestedInput
+    teacher?: TeacherUpdateOneRequiredWithoutTest_tuitionNestedInput
+    student?: StudentUpdateOneRequiredWithoutTuition_testsNestedInput
   }
 
   export type Test_TuitionUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    subject?: StringFieldUpdateOperationsInput | string
+    syllabus?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     marks_scored?: IntFieldUpdateOperationsInput | number
     total_marks?: IntFieldUpdateOperationsInput | number
-    test_tuition_student_info?: Test_Tuition_Student_InfoUncheckedUpdateOneWithoutTuition_testNestedInput
+    teacherId?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
   }
 
   export type Test_TuitionCreateManyInput = {
     id?: number
     name: string
-    subject: string
+    syllabus: string
     date: Date | string
     marks_scored: number
     total_marks: number
+    teacherId: number
+    studentId: number
   }
 
   export type Test_TuitionUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
-    subject?: StringFieldUpdateOperationsInput | string
+    syllabus?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     marks_scored?: IntFieldUpdateOperationsInput | number
     total_marks?: IntFieldUpdateOperationsInput | number
@@ -8221,48 +7252,10 @@ export namespace Prisma {
   export type Test_TuitionUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    subject?: StringFieldUpdateOperationsInput | string
+    syllabus?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     marks_scored?: IntFieldUpdateOperationsInput | number
     total_marks?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type Test_Tuition_Student_InfoCreateInput = {
-    student: StudentCreateNestedOneWithoutTest_tuition_student_infoInput
-    teacher: TeacherCreateNestedOneWithoutTest_Tuition_Student_InfoInput
-    tuition_test: Test_TuitionCreateNestedOneWithoutTest_tuition_student_infoInput
-  }
-
-  export type Test_Tuition_Student_InfoUncheckedCreateInput = {
-    testId: number
-    teacherId: number
-    studentId: number
-  }
-
-  export type Test_Tuition_Student_InfoUpdateInput = {
-    student?: StudentUpdateOneRequiredWithoutTest_tuition_student_infoNestedInput
-    teacher?: TeacherUpdateOneRequiredWithoutTest_Tuition_Student_InfoNestedInput
-    tuition_test?: Test_TuitionUpdateOneRequiredWithoutTest_tuition_student_infoNestedInput
-  }
-
-  export type Test_Tuition_Student_InfoUncheckedUpdateInput = {
-    testId?: IntFieldUpdateOperationsInput | number
-    teacherId?: IntFieldUpdateOperationsInput | number
-    studentId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type Test_Tuition_Student_InfoCreateManyInput = {
-    testId: number
-    teacherId: number
-    studentId: number
-  }
-
-  export type Test_Tuition_Student_InfoUpdateManyMutationInput = {
-
-  }
-
-  export type Test_Tuition_Student_InfoUncheckedUpdateManyInput = {
-    testId?: IntFieldUpdateOperationsInput | number
     teacherId?: IntFieldUpdateOperationsInput | number
     studentId?: IntFieldUpdateOperationsInput | number
   }
@@ -8414,6 +7407,7 @@ export namespace Prisma {
     lastName?: SortOrder
     imageUrl?: SortOrder
     clerkUserId?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8429,6 +7423,7 @@ export namespace Prisma {
     lastName?: SortOrder
     imageUrl?: SortOrder
     clerkUserId?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8440,6 +7435,7 @@ export namespace Prisma {
     lastName?: SortOrder
     imageUrl?: SortOrder
     clerkUserId?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8530,12 +7526,17 @@ export namespace Prisma {
     none?: Test_SchoolWhereInput
   }
 
-  export type Test_Tuition_Student_InfoNullableRelationFilter = {
-    is?: Test_Tuition_Student_InfoWhereInput | null
-    isNot?: Test_Tuition_Student_InfoWhereInput | null
+  export type Test_TuitionListRelationFilter = {
+    every?: Test_TuitionWhereInput
+    some?: Test_TuitionWhereInput
+    none?: Test_TuitionWhereInput
   }
 
   export type Test_SchoolOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type Test_TuitionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -8584,6 +7585,16 @@ export namespace Prisma {
     teacherId?: SortOrder
   }
 
+  export type StudentListRelationFilter = {
+    every?: StudentWhereInput
+    some?: StudentWhereInput
+    none?: StudentWhereInput
+  }
+
+  export type StudentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type TeacherCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
@@ -8615,81 +7626,56 @@ export namespace Prisma {
     userId?: SortOrder
   }
 
+  export type StudentRelationFilter = {
+    is?: StudentWhereInput
+    isNot?: StudentWhereInput
+  }
+
   export type Test_TuitionCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    subject?: SortOrder
+    syllabus?: SortOrder
     date?: SortOrder
     marks_scored?: SortOrder
     total_marks?: SortOrder
+    teacherId?: SortOrder
+    studentId?: SortOrder
   }
 
   export type Test_TuitionAvgOrderByAggregateInput = {
     id?: SortOrder
     marks_scored?: SortOrder
     total_marks?: SortOrder
+    teacherId?: SortOrder
+    studentId?: SortOrder
   }
 
   export type Test_TuitionMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    subject?: SortOrder
+    syllabus?: SortOrder
     date?: SortOrder
     marks_scored?: SortOrder
     total_marks?: SortOrder
+    teacherId?: SortOrder
+    studentId?: SortOrder
   }
 
   export type Test_TuitionMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    subject?: SortOrder
+    syllabus?: SortOrder
     date?: SortOrder
     marks_scored?: SortOrder
     total_marks?: SortOrder
+    teacherId?: SortOrder
+    studentId?: SortOrder
   }
 
   export type Test_TuitionSumOrderByAggregateInput = {
     id?: SortOrder
     marks_scored?: SortOrder
     total_marks?: SortOrder
-  }
-
-  export type StudentRelationFilter = {
-    is?: StudentWhereInput
-    isNot?: StudentWhereInput
-  }
-
-  export type Test_TuitionRelationFilter = {
-    is?: Test_TuitionWhereInput
-    isNot?: Test_TuitionWhereInput
-  }
-
-  export type Test_Tuition_Student_InfoCountOrderByAggregateInput = {
-    testId?: SortOrder
-    teacherId?: SortOrder
-    studentId?: SortOrder
-  }
-
-  export type Test_Tuition_Student_InfoAvgOrderByAggregateInput = {
-    testId?: SortOrder
-    teacherId?: SortOrder
-    studentId?: SortOrder
-  }
-
-  export type Test_Tuition_Student_InfoMaxOrderByAggregateInput = {
-    testId?: SortOrder
-    teacherId?: SortOrder
-    studentId?: SortOrder
-  }
-
-  export type Test_Tuition_Student_InfoMinOrderByAggregateInput = {
-    testId?: SortOrder
-    teacherId?: SortOrder
-    studentId?: SortOrder
-  }
-
-  export type Test_Tuition_Student_InfoSumOrderByAggregateInput = {
-    testId?: SortOrder
     teacherId?: SortOrder
     studentId?: SortOrder
   }
@@ -8857,10 +7843,11 @@ export namespace Prisma {
     connect?: Test_SchoolWhereUniqueInput | Test_SchoolWhereUniqueInput[]
   }
 
-  export type Test_Tuition_Student_InfoCreateNestedOneWithoutStudentInput = {
-    create?: XOR<Test_Tuition_Student_InfoCreateWithoutStudentInput, Test_Tuition_Student_InfoUncheckedCreateWithoutStudentInput>
-    connectOrCreate?: Test_Tuition_Student_InfoCreateOrConnectWithoutStudentInput
-    connect?: Test_Tuition_Student_InfoWhereUniqueInput
+  export type Test_TuitionCreateNestedManyWithoutStudentInput = {
+    create?: XOR<Test_TuitionCreateWithoutStudentInput, Test_TuitionUncheckedCreateWithoutStudentInput> | Test_TuitionCreateWithoutStudentInput[] | Test_TuitionUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: Test_TuitionCreateOrConnectWithoutStudentInput | Test_TuitionCreateOrConnectWithoutStudentInput[]
+    createMany?: Test_TuitionCreateManyStudentInputEnvelope
+    connect?: Test_TuitionWhereUniqueInput | Test_TuitionWhereUniqueInput[]
   }
 
   export type Test_SchoolUncheckedCreateNestedManyWithoutStudentInput = {
@@ -8870,10 +7857,11 @@ export namespace Prisma {
     connect?: Test_SchoolWhereUniqueInput | Test_SchoolWhereUniqueInput[]
   }
 
-  export type Test_Tuition_Student_InfoUncheckedCreateNestedOneWithoutStudentInput = {
-    create?: XOR<Test_Tuition_Student_InfoCreateWithoutStudentInput, Test_Tuition_Student_InfoUncheckedCreateWithoutStudentInput>
-    connectOrCreate?: Test_Tuition_Student_InfoCreateOrConnectWithoutStudentInput
-    connect?: Test_Tuition_Student_InfoWhereUniqueInput
+  export type Test_TuitionUncheckedCreateNestedManyWithoutStudentInput = {
+    create?: XOR<Test_TuitionCreateWithoutStudentInput, Test_TuitionUncheckedCreateWithoutStudentInput> | Test_TuitionCreateWithoutStudentInput[] | Test_TuitionUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: Test_TuitionCreateOrConnectWithoutStudentInput | Test_TuitionCreateOrConnectWithoutStudentInput[]
+    createMany?: Test_TuitionCreateManyStudentInputEnvelope
+    connect?: Test_TuitionWhereUniqueInput | Test_TuitionWhereUniqueInput[]
   }
 
   export type TeacherUpdateOneRequiredWithoutStudentNestedInput = {
@@ -8906,14 +7894,18 @@ export namespace Prisma {
     deleteMany?: Test_SchoolScalarWhereInput | Test_SchoolScalarWhereInput[]
   }
 
-  export type Test_Tuition_Student_InfoUpdateOneWithoutStudentNestedInput = {
-    create?: XOR<Test_Tuition_Student_InfoCreateWithoutStudentInput, Test_Tuition_Student_InfoUncheckedCreateWithoutStudentInput>
-    connectOrCreate?: Test_Tuition_Student_InfoCreateOrConnectWithoutStudentInput
-    upsert?: Test_Tuition_Student_InfoUpsertWithoutStudentInput
-    disconnect?: Test_Tuition_Student_InfoWhereInput | boolean
-    delete?: Test_Tuition_Student_InfoWhereInput | boolean
-    connect?: Test_Tuition_Student_InfoWhereUniqueInput
-    update?: XOR<XOR<Test_Tuition_Student_InfoUpdateToOneWithWhereWithoutStudentInput, Test_Tuition_Student_InfoUpdateWithoutStudentInput>, Test_Tuition_Student_InfoUncheckedUpdateWithoutStudentInput>
+  export type Test_TuitionUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<Test_TuitionCreateWithoutStudentInput, Test_TuitionUncheckedCreateWithoutStudentInput> | Test_TuitionCreateWithoutStudentInput[] | Test_TuitionUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: Test_TuitionCreateOrConnectWithoutStudentInput | Test_TuitionCreateOrConnectWithoutStudentInput[]
+    upsert?: Test_TuitionUpsertWithWhereUniqueWithoutStudentInput | Test_TuitionUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: Test_TuitionCreateManyStudentInputEnvelope
+    set?: Test_TuitionWhereUniqueInput | Test_TuitionWhereUniqueInput[]
+    disconnect?: Test_TuitionWhereUniqueInput | Test_TuitionWhereUniqueInput[]
+    delete?: Test_TuitionWhereUniqueInput | Test_TuitionWhereUniqueInput[]
+    connect?: Test_TuitionWhereUniqueInput | Test_TuitionWhereUniqueInput[]
+    update?: Test_TuitionUpdateWithWhereUniqueWithoutStudentInput | Test_TuitionUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: Test_TuitionUpdateManyWithWhereWithoutStudentInput | Test_TuitionUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: Test_TuitionScalarWhereInput | Test_TuitionScalarWhereInput[]
   }
 
   export type Test_SchoolUncheckedUpdateManyWithoutStudentNestedInput = {
@@ -8930,20 +7922,25 @@ export namespace Prisma {
     deleteMany?: Test_SchoolScalarWhereInput | Test_SchoolScalarWhereInput[]
   }
 
-  export type Test_Tuition_Student_InfoUncheckedUpdateOneWithoutStudentNestedInput = {
-    create?: XOR<Test_Tuition_Student_InfoCreateWithoutStudentInput, Test_Tuition_Student_InfoUncheckedCreateWithoutStudentInput>
-    connectOrCreate?: Test_Tuition_Student_InfoCreateOrConnectWithoutStudentInput
-    upsert?: Test_Tuition_Student_InfoUpsertWithoutStudentInput
-    disconnect?: Test_Tuition_Student_InfoWhereInput | boolean
-    delete?: Test_Tuition_Student_InfoWhereInput | boolean
-    connect?: Test_Tuition_Student_InfoWhereUniqueInput
-    update?: XOR<XOR<Test_Tuition_Student_InfoUpdateToOneWithWhereWithoutStudentInput, Test_Tuition_Student_InfoUpdateWithoutStudentInput>, Test_Tuition_Student_InfoUncheckedUpdateWithoutStudentInput>
+  export type Test_TuitionUncheckedUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<Test_TuitionCreateWithoutStudentInput, Test_TuitionUncheckedCreateWithoutStudentInput> | Test_TuitionCreateWithoutStudentInput[] | Test_TuitionUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: Test_TuitionCreateOrConnectWithoutStudentInput | Test_TuitionCreateOrConnectWithoutStudentInput[]
+    upsert?: Test_TuitionUpsertWithWhereUniqueWithoutStudentInput | Test_TuitionUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: Test_TuitionCreateManyStudentInputEnvelope
+    set?: Test_TuitionWhereUniqueInput | Test_TuitionWhereUniqueInput[]
+    disconnect?: Test_TuitionWhereUniqueInput | Test_TuitionWhereUniqueInput[]
+    delete?: Test_TuitionWhereUniqueInput | Test_TuitionWhereUniqueInput[]
+    connect?: Test_TuitionWhereUniqueInput | Test_TuitionWhereUniqueInput[]
+    update?: Test_TuitionUpdateWithWhereUniqueWithoutStudentInput | Test_TuitionUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: Test_TuitionUpdateManyWithWhereWithoutStudentInput | Test_TuitionUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: Test_TuitionScalarWhereInput | Test_TuitionScalarWhereInput[]
   }
 
-  export type StudentCreateNestedOneWithoutTeacherInput = {
-    create?: XOR<StudentCreateWithoutTeacherInput, StudentUncheckedCreateWithoutTeacherInput>
-    connectOrCreate?: StudentCreateOrConnectWithoutTeacherInput
-    connect?: StudentWhereUniqueInput
+  export type StudentCreateNestedManyWithoutTeacherInput = {
+    create?: XOR<StudentCreateWithoutTeacherInput, StudentUncheckedCreateWithoutTeacherInput> | StudentCreateWithoutTeacherInput[] | StudentUncheckedCreateWithoutTeacherInput[]
+    connectOrCreate?: StudentCreateOrConnectWithoutTeacherInput | StudentCreateOrConnectWithoutTeacherInput[]
+    createMany?: StudentCreateManyTeacherInputEnvelope
+    connect?: StudentWhereUniqueInput | StudentWhereUniqueInput[]
   }
 
   export type UserCreateNestedOneWithoutTeacherInput = {
@@ -8952,32 +7949,39 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type Test_Tuition_Student_InfoCreateNestedOneWithoutTeacherInput = {
-    create?: XOR<Test_Tuition_Student_InfoCreateWithoutTeacherInput, Test_Tuition_Student_InfoUncheckedCreateWithoutTeacherInput>
-    connectOrCreate?: Test_Tuition_Student_InfoCreateOrConnectWithoutTeacherInput
-    connect?: Test_Tuition_Student_InfoWhereUniqueInput
+  export type Test_TuitionCreateNestedManyWithoutTeacherInput = {
+    create?: XOR<Test_TuitionCreateWithoutTeacherInput, Test_TuitionUncheckedCreateWithoutTeacherInput> | Test_TuitionCreateWithoutTeacherInput[] | Test_TuitionUncheckedCreateWithoutTeacherInput[]
+    connectOrCreate?: Test_TuitionCreateOrConnectWithoutTeacherInput | Test_TuitionCreateOrConnectWithoutTeacherInput[]
+    createMany?: Test_TuitionCreateManyTeacherInputEnvelope
+    connect?: Test_TuitionWhereUniqueInput | Test_TuitionWhereUniqueInput[]
   }
 
-  export type StudentUncheckedCreateNestedOneWithoutTeacherInput = {
-    create?: XOR<StudentCreateWithoutTeacherInput, StudentUncheckedCreateWithoutTeacherInput>
-    connectOrCreate?: StudentCreateOrConnectWithoutTeacherInput
-    connect?: StudentWhereUniqueInput
+  export type StudentUncheckedCreateNestedManyWithoutTeacherInput = {
+    create?: XOR<StudentCreateWithoutTeacherInput, StudentUncheckedCreateWithoutTeacherInput> | StudentCreateWithoutTeacherInput[] | StudentUncheckedCreateWithoutTeacherInput[]
+    connectOrCreate?: StudentCreateOrConnectWithoutTeacherInput | StudentCreateOrConnectWithoutTeacherInput[]
+    createMany?: StudentCreateManyTeacherInputEnvelope
+    connect?: StudentWhereUniqueInput | StudentWhereUniqueInput[]
   }
 
-  export type Test_Tuition_Student_InfoUncheckedCreateNestedOneWithoutTeacherInput = {
-    create?: XOR<Test_Tuition_Student_InfoCreateWithoutTeacherInput, Test_Tuition_Student_InfoUncheckedCreateWithoutTeacherInput>
-    connectOrCreate?: Test_Tuition_Student_InfoCreateOrConnectWithoutTeacherInput
-    connect?: Test_Tuition_Student_InfoWhereUniqueInput
+  export type Test_TuitionUncheckedCreateNestedManyWithoutTeacherInput = {
+    create?: XOR<Test_TuitionCreateWithoutTeacherInput, Test_TuitionUncheckedCreateWithoutTeacherInput> | Test_TuitionCreateWithoutTeacherInput[] | Test_TuitionUncheckedCreateWithoutTeacherInput[]
+    connectOrCreate?: Test_TuitionCreateOrConnectWithoutTeacherInput | Test_TuitionCreateOrConnectWithoutTeacherInput[]
+    createMany?: Test_TuitionCreateManyTeacherInputEnvelope
+    connect?: Test_TuitionWhereUniqueInput | Test_TuitionWhereUniqueInput[]
   }
 
-  export type StudentUpdateOneWithoutTeacherNestedInput = {
-    create?: XOR<StudentCreateWithoutTeacherInput, StudentUncheckedCreateWithoutTeacherInput>
-    connectOrCreate?: StudentCreateOrConnectWithoutTeacherInput
-    upsert?: StudentUpsertWithoutTeacherInput
-    disconnect?: StudentWhereInput | boolean
-    delete?: StudentWhereInput | boolean
-    connect?: StudentWhereUniqueInput
-    update?: XOR<XOR<StudentUpdateToOneWithWhereWithoutTeacherInput, StudentUpdateWithoutTeacherInput>, StudentUncheckedUpdateWithoutTeacherInput>
+  export type StudentUpdateManyWithoutTeacherNestedInput = {
+    create?: XOR<StudentCreateWithoutTeacherInput, StudentUncheckedCreateWithoutTeacherInput> | StudentCreateWithoutTeacherInput[] | StudentUncheckedCreateWithoutTeacherInput[]
+    connectOrCreate?: StudentCreateOrConnectWithoutTeacherInput | StudentCreateOrConnectWithoutTeacherInput[]
+    upsert?: StudentUpsertWithWhereUniqueWithoutTeacherInput | StudentUpsertWithWhereUniqueWithoutTeacherInput[]
+    createMany?: StudentCreateManyTeacherInputEnvelope
+    set?: StudentWhereUniqueInput | StudentWhereUniqueInput[]
+    disconnect?: StudentWhereUniqueInput | StudentWhereUniqueInput[]
+    delete?: StudentWhereUniqueInput | StudentWhereUniqueInput[]
+    connect?: StudentWhereUniqueInput | StudentWhereUniqueInput[]
+    update?: StudentUpdateWithWhereUniqueWithoutTeacherInput | StudentUpdateWithWhereUniqueWithoutTeacherInput[]
+    updateMany?: StudentUpdateManyWithWhereWithoutTeacherInput | StudentUpdateManyWithWhereWithoutTeacherInput[]
+    deleteMany?: StudentScalarWhereInput | StudentScalarWhereInput[]
   }
 
   export type UserUpdateOneRequiredWithoutTeacherNestedInput = {
@@ -8988,108 +7992,74 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTeacherInput, UserUpdateWithoutTeacherInput>, UserUncheckedUpdateWithoutTeacherInput>
   }
 
-  export type Test_Tuition_Student_InfoUpdateOneWithoutTeacherNestedInput = {
-    create?: XOR<Test_Tuition_Student_InfoCreateWithoutTeacherInput, Test_Tuition_Student_InfoUncheckedCreateWithoutTeacherInput>
-    connectOrCreate?: Test_Tuition_Student_InfoCreateOrConnectWithoutTeacherInput
-    upsert?: Test_Tuition_Student_InfoUpsertWithoutTeacherInput
-    disconnect?: Test_Tuition_Student_InfoWhereInput | boolean
-    delete?: Test_Tuition_Student_InfoWhereInput | boolean
-    connect?: Test_Tuition_Student_InfoWhereUniqueInput
-    update?: XOR<XOR<Test_Tuition_Student_InfoUpdateToOneWithWhereWithoutTeacherInput, Test_Tuition_Student_InfoUpdateWithoutTeacherInput>, Test_Tuition_Student_InfoUncheckedUpdateWithoutTeacherInput>
+  export type Test_TuitionUpdateManyWithoutTeacherNestedInput = {
+    create?: XOR<Test_TuitionCreateWithoutTeacherInput, Test_TuitionUncheckedCreateWithoutTeacherInput> | Test_TuitionCreateWithoutTeacherInput[] | Test_TuitionUncheckedCreateWithoutTeacherInput[]
+    connectOrCreate?: Test_TuitionCreateOrConnectWithoutTeacherInput | Test_TuitionCreateOrConnectWithoutTeacherInput[]
+    upsert?: Test_TuitionUpsertWithWhereUniqueWithoutTeacherInput | Test_TuitionUpsertWithWhereUniqueWithoutTeacherInput[]
+    createMany?: Test_TuitionCreateManyTeacherInputEnvelope
+    set?: Test_TuitionWhereUniqueInput | Test_TuitionWhereUniqueInput[]
+    disconnect?: Test_TuitionWhereUniqueInput | Test_TuitionWhereUniqueInput[]
+    delete?: Test_TuitionWhereUniqueInput | Test_TuitionWhereUniqueInput[]
+    connect?: Test_TuitionWhereUniqueInput | Test_TuitionWhereUniqueInput[]
+    update?: Test_TuitionUpdateWithWhereUniqueWithoutTeacherInput | Test_TuitionUpdateWithWhereUniqueWithoutTeacherInput[]
+    updateMany?: Test_TuitionUpdateManyWithWhereWithoutTeacherInput | Test_TuitionUpdateManyWithWhereWithoutTeacherInput[]
+    deleteMany?: Test_TuitionScalarWhereInput | Test_TuitionScalarWhereInput[]
   }
 
-  export type StudentUncheckedUpdateOneWithoutTeacherNestedInput = {
-    create?: XOR<StudentCreateWithoutTeacherInput, StudentUncheckedCreateWithoutTeacherInput>
-    connectOrCreate?: StudentCreateOrConnectWithoutTeacherInput
-    upsert?: StudentUpsertWithoutTeacherInput
-    disconnect?: StudentWhereInput | boolean
-    delete?: StudentWhereInput | boolean
-    connect?: StudentWhereUniqueInput
-    update?: XOR<XOR<StudentUpdateToOneWithWhereWithoutTeacherInput, StudentUpdateWithoutTeacherInput>, StudentUncheckedUpdateWithoutTeacherInput>
+  export type StudentUncheckedUpdateManyWithoutTeacherNestedInput = {
+    create?: XOR<StudentCreateWithoutTeacherInput, StudentUncheckedCreateWithoutTeacherInput> | StudentCreateWithoutTeacherInput[] | StudentUncheckedCreateWithoutTeacherInput[]
+    connectOrCreate?: StudentCreateOrConnectWithoutTeacherInput | StudentCreateOrConnectWithoutTeacherInput[]
+    upsert?: StudentUpsertWithWhereUniqueWithoutTeacherInput | StudentUpsertWithWhereUniqueWithoutTeacherInput[]
+    createMany?: StudentCreateManyTeacherInputEnvelope
+    set?: StudentWhereUniqueInput | StudentWhereUniqueInput[]
+    disconnect?: StudentWhereUniqueInput | StudentWhereUniqueInput[]
+    delete?: StudentWhereUniqueInput | StudentWhereUniqueInput[]
+    connect?: StudentWhereUniqueInput | StudentWhereUniqueInput[]
+    update?: StudentUpdateWithWhereUniqueWithoutTeacherInput | StudentUpdateWithWhereUniqueWithoutTeacherInput[]
+    updateMany?: StudentUpdateManyWithWhereWithoutTeacherInput | StudentUpdateManyWithWhereWithoutTeacherInput[]
+    deleteMany?: StudentScalarWhereInput | StudentScalarWhereInput[]
   }
 
-  export type Test_Tuition_Student_InfoUncheckedUpdateOneWithoutTeacherNestedInput = {
-    create?: XOR<Test_Tuition_Student_InfoCreateWithoutTeacherInput, Test_Tuition_Student_InfoUncheckedCreateWithoutTeacherInput>
-    connectOrCreate?: Test_Tuition_Student_InfoCreateOrConnectWithoutTeacherInput
-    upsert?: Test_Tuition_Student_InfoUpsertWithoutTeacherInput
-    disconnect?: Test_Tuition_Student_InfoWhereInput | boolean
-    delete?: Test_Tuition_Student_InfoWhereInput | boolean
-    connect?: Test_Tuition_Student_InfoWhereUniqueInput
-    update?: XOR<XOR<Test_Tuition_Student_InfoUpdateToOneWithWhereWithoutTeacherInput, Test_Tuition_Student_InfoUpdateWithoutTeacherInput>, Test_Tuition_Student_InfoUncheckedUpdateWithoutTeacherInput>
+  export type Test_TuitionUncheckedUpdateManyWithoutTeacherNestedInput = {
+    create?: XOR<Test_TuitionCreateWithoutTeacherInput, Test_TuitionUncheckedCreateWithoutTeacherInput> | Test_TuitionCreateWithoutTeacherInput[] | Test_TuitionUncheckedCreateWithoutTeacherInput[]
+    connectOrCreate?: Test_TuitionCreateOrConnectWithoutTeacherInput | Test_TuitionCreateOrConnectWithoutTeacherInput[]
+    upsert?: Test_TuitionUpsertWithWhereUniqueWithoutTeacherInput | Test_TuitionUpsertWithWhereUniqueWithoutTeacherInput[]
+    createMany?: Test_TuitionCreateManyTeacherInputEnvelope
+    set?: Test_TuitionWhereUniqueInput | Test_TuitionWhereUniqueInput[]
+    disconnect?: Test_TuitionWhereUniqueInput | Test_TuitionWhereUniqueInput[]
+    delete?: Test_TuitionWhereUniqueInput | Test_TuitionWhereUniqueInput[]
+    connect?: Test_TuitionWhereUniqueInput | Test_TuitionWhereUniqueInput[]
+    update?: Test_TuitionUpdateWithWhereUniqueWithoutTeacherInput | Test_TuitionUpdateWithWhereUniqueWithoutTeacherInput[]
+    updateMany?: Test_TuitionUpdateManyWithWhereWithoutTeacherInput | Test_TuitionUpdateManyWithWhereWithoutTeacherInput[]
+    deleteMany?: Test_TuitionScalarWhereInput | Test_TuitionScalarWhereInput[]
   }
 
-  export type Test_Tuition_Student_InfoCreateNestedOneWithoutTuition_testInput = {
-    create?: XOR<Test_Tuition_Student_InfoCreateWithoutTuition_testInput, Test_Tuition_Student_InfoUncheckedCreateWithoutTuition_testInput>
-    connectOrCreate?: Test_Tuition_Student_InfoCreateOrConnectWithoutTuition_testInput
-    connect?: Test_Tuition_Student_InfoWhereUniqueInput
-  }
-
-  export type Test_Tuition_Student_InfoUncheckedCreateNestedOneWithoutTuition_testInput = {
-    create?: XOR<Test_Tuition_Student_InfoCreateWithoutTuition_testInput, Test_Tuition_Student_InfoUncheckedCreateWithoutTuition_testInput>
-    connectOrCreate?: Test_Tuition_Student_InfoCreateOrConnectWithoutTuition_testInput
-    connect?: Test_Tuition_Student_InfoWhereUniqueInput
-  }
-
-  export type Test_Tuition_Student_InfoUpdateOneWithoutTuition_testNestedInput = {
-    create?: XOR<Test_Tuition_Student_InfoCreateWithoutTuition_testInput, Test_Tuition_Student_InfoUncheckedCreateWithoutTuition_testInput>
-    connectOrCreate?: Test_Tuition_Student_InfoCreateOrConnectWithoutTuition_testInput
-    upsert?: Test_Tuition_Student_InfoUpsertWithoutTuition_testInput
-    disconnect?: Test_Tuition_Student_InfoWhereInput | boolean
-    delete?: Test_Tuition_Student_InfoWhereInput | boolean
-    connect?: Test_Tuition_Student_InfoWhereUniqueInput
-    update?: XOR<XOR<Test_Tuition_Student_InfoUpdateToOneWithWhereWithoutTuition_testInput, Test_Tuition_Student_InfoUpdateWithoutTuition_testInput>, Test_Tuition_Student_InfoUncheckedUpdateWithoutTuition_testInput>
-  }
-
-  export type Test_Tuition_Student_InfoUncheckedUpdateOneWithoutTuition_testNestedInput = {
-    create?: XOR<Test_Tuition_Student_InfoCreateWithoutTuition_testInput, Test_Tuition_Student_InfoUncheckedCreateWithoutTuition_testInput>
-    connectOrCreate?: Test_Tuition_Student_InfoCreateOrConnectWithoutTuition_testInput
-    upsert?: Test_Tuition_Student_InfoUpsertWithoutTuition_testInput
-    disconnect?: Test_Tuition_Student_InfoWhereInput | boolean
-    delete?: Test_Tuition_Student_InfoWhereInput | boolean
-    connect?: Test_Tuition_Student_InfoWhereUniqueInput
-    update?: XOR<XOR<Test_Tuition_Student_InfoUpdateToOneWithWhereWithoutTuition_testInput, Test_Tuition_Student_InfoUpdateWithoutTuition_testInput>, Test_Tuition_Student_InfoUncheckedUpdateWithoutTuition_testInput>
-  }
-
-  export type StudentCreateNestedOneWithoutTest_tuition_student_infoInput = {
-    create?: XOR<StudentCreateWithoutTest_tuition_student_infoInput, StudentUncheckedCreateWithoutTest_tuition_student_infoInput>
-    connectOrCreate?: StudentCreateOrConnectWithoutTest_tuition_student_infoInput
-    connect?: StudentWhereUniqueInput
-  }
-
-  export type TeacherCreateNestedOneWithoutTest_Tuition_Student_InfoInput = {
-    create?: XOR<TeacherCreateWithoutTest_Tuition_Student_InfoInput, TeacherUncheckedCreateWithoutTest_Tuition_Student_InfoInput>
-    connectOrCreate?: TeacherCreateOrConnectWithoutTest_Tuition_Student_InfoInput
+  export type TeacherCreateNestedOneWithoutTest_tuitionInput = {
+    create?: XOR<TeacherCreateWithoutTest_tuitionInput, TeacherUncheckedCreateWithoutTest_tuitionInput>
+    connectOrCreate?: TeacherCreateOrConnectWithoutTest_tuitionInput
     connect?: TeacherWhereUniqueInput
   }
 
-  export type Test_TuitionCreateNestedOneWithoutTest_tuition_student_infoInput = {
-    create?: XOR<Test_TuitionCreateWithoutTest_tuition_student_infoInput, Test_TuitionUncheckedCreateWithoutTest_tuition_student_infoInput>
-    connectOrCreate?: Test_TuitionCreateOrConnectWithoutTest_tuition_student_infoInput
-    connect?: Test_TuitionWhereUniqueInput
-  }
-
-  export type StudentUpdateOneRequiredWithoutTest_tuition_student_infoNestedInput = {
-    create?: XOR<StudentCreateWithoutTest_tuition_student_infoInput, StudentUncheckedCreateWithoutTest_tuition_student_infoInput>
-    connectOrCreate?: StudentCreateOrConnectWithoutTest_tuition_student_infoInput
-    upsert?: StudentUpsertWithoutTest_tuition_student_infoInput
+  export type StudentCreateNestedOneWithoutTuition_testsInput = {
+    create?: XOR<StudentCreateWithoutTuition_testsInput, StudentUncheckedCreateWithoutTuition_testsInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutTuition_testsInput
     connect?: StudentWhereUniqueInput
-    update?: XOR<XOR<StudentUpdateToOneWithWhereWithoutTest_tuition_student_infoInput, StudentUpdateWithoutTest_tuition_student_infoInput>, StudentUncheckedUpdateWithoutTest_tuition_student_infoInput>
   }
 
-  export type TeacherUpdateOneRequiredWithoutTest_Tuition_Student_InfoNestedInput = {
-    create?: XOR<TeacherCreateWithoutTest_Tuition_Student_InfoInput, TeacherUncheckedCreateWithoutTest_Tuition_Student_InfoInput>
-    connectOrCreate?: TeacherCreateOrConnectWithoutTest_Tuition_Student_InfoInput
-    upsert?: TeacherUpsertWithoutTest_Tuition_Student_InfoInput
+  export type TeacherUpdateOneRequiredWithoutTest_tuitionNestedInput = {
+    create?: XOR<TeacherCreateWithoutTest_tuitionInput, TeacherUncheckedCreateWithoutTest_tuitionInput>
+    connectOrCreate?: TeacherCreateOrConnectWithoutTest_tuitionInput
+    upsert?: TeacherUpsertWithoutTest_tuitionInput
     connect?: TeacherWhereUniqueInput
-    update?: XOR<XOR<TeacherUpdateToOneWithWhereWithoutTest_Tuition_Student_InfoInput, TeacherUpdateWithoutTest_Tuition_Student_InfoInput>, TeacherUncheckedUpdateWithoutTest_Tuition_Student_InfoInput>
+    update?: XOR<XOR<TeacherUpdateToOneWithWhereWithoutTest_tuitionInput, TeacherUpdateWithoutTest_tuitionInput>, TeacherUncheckedUpdateWithoutTest_tuitionInput>
   }
 
-  export type Test_TuitionUpdateOneRequiredWithoutTest_tuition_student_infoNestedInput = {
-    create?: XOR<Test_TuitionCreateWithoutTest_tuition_student_infoInput, Test_TuitionUncheckedCreateWithoutTest_tuition_student_infoInput>
-    connectOrCreate?: Test_TuitionCreateOrConnectWithoutTest_tuition_student_infoInput
-    upsert?: Test_TuitionUpsertWithoutTest_tuition_student_infoInput
-    connect?: Test_TuitionWhereUniqueInput
-    update?: XOR<XOR<Test_TuitionUpdateToOneWithWhereWithoutTest_tuition_student_infoInput, Test_TuitionUpdateWithoutTest_tuition_student_infoInput>, Test_TuitionUncheckedUpdateWithoutTest_tuition_student_infoInput>
+  export type StudentUpdateOneRequiredWithoutTuition_testsNestedInput = {
+    create?: XOR<StudentCreateWithoutTuition_testsInput, StudentUncheckedCreateWithoutTuition_testsInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutTuition_testsInput
+    upsert?: StudentUpsertWithoutTuition_testsInput
+    connect?: StudentWhereUniqueInput
+    update?: XOR<XOR<StudentUpdateToOneWithWhereWithoutTuition_testsInput, StudentUpdateWithoutTuition_testsInput>, StudentUncheckedUpdateWithoutTuition_testsInput>
   }
 
   export type StudentCreateNestedOneWithoutSchool_testsInput = {
@@ -9267,7 +8237,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     teacher: TeacherCreateNestedOneWithoutStudentInput
     school_tests?: Test_SchoolCreateNestedManyWithoutStudentInput
-    test_tuition_student_info?: Test_Tuition_Student_InfoCreateNestedOneWithoutStudentInput
+    tuition_tests?: Test_TuitionCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutUserInput = {
@@ -9279,7 +8249,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     teacherId: number
     school_tests?: Test_SchoolUncheckedCreateNestedManyWithoutStudentInput
-    test_tuition_student_info?: Test_Tuition_Student_InfoUncheckedCreateNestedOneWithoutStudentInput
+    tuition_tests?: Test_TuitionUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutUserInput = {
@@ -9290,16 +8260,16 @@ export namespace Prisma {
   export type TeacherCreateWithoutUserInput = {
     createdAt?: Date | string
     updatedAt?: Date | string
-    Student?: StudentCreateNestedOneWithoutTeacherInput
-    Test_Tuition_Student_Info?: Test_Tuition_Student_InfoCreateNestedOneWithoutTeacherInput
+    Student?: StudentCreateNestedManyWithoutTeacherInput
+    test_tuition?: Test_TuitionCreateNestedManyWithoutTeacherInput
   }
 
   export type TeacherUncheckedCreateWithoutUserInput = {
     id?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    Student?: StudentUncheckedCreateNestedOneWithoutTeacherInput
-    Test_Tuition_Student_Info?: Test_Tuition_Student_InfoUncheckedCreateNestedOneWithoutTeacherInput
+    Student?: StudentUncheckedCreateNestedManyWithoutTeacherInput
+    test_tuition?: Test_TuitionUncheckedCreateNestedManyWithoutTeacherInput
   }
 
   export type TeacherCreateOrConnectWithoutUserInput = {
@@ -9326,7 +8296,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     teacher?: TeacherUpdateOneRequiredWithoutStudentNestedInput
     school_tests?: Test_SchoolUpdateManyWithoutStudentNestedInput
-    test_tuition_student_info?: Test_Tuition_Student_InfoUpdateOneWithoutStudentNestedInput
+    tuition_tests?: Test_TuitionUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutUserInput = {
@@ -9338,7 +8308,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     teacherId?: IntFieldUpdateOperationsInput | number
     school_tests?: Test_SchoolUncheckedUpdateManyWithoutStudentNestedInput
-    test_tuition_student_info?: Test_Tuition_Student_InfoUncheckedUpdateOneWithoutStudentNestedInput
+    tuition_tests?: Test_TuitionUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type TeacherUpsertWithoutUserInput = {
@@ -9355,23 +8325,23 @@ export namespace Prisma {
   export type TeacherUpdateWithoutUserInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Student?: StudentUpdateOneWithoutTeacherNestedInput
-    Test_Tuition_Student_Info?: Test_Tuition_Student_InfoUpdateOneWithoutTeacherNestedInput
+    Student?: StudentUpdateManyWithoutTeacherNestedInput
+    test_tuition?: Test_TuitionUpdateManyWithoutTeacherNestedInput
   }
 
   export type TeacherUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Student?: StudentUncheckedUpdateOneWithoutTeacherNestedInput
-    Test_Tuition_Student_Info?: Test_Tuition_Student_InfoUncheckedUpdateOneWithoutTeacherNestedInput
+    Student?: StudentUncheckedUpdateManyWithoutTeacherNestedInput
+    test_tuition?: Test_TuitionUncheckedUpdateManyWithoutTeacherNestedInput
   }
 
   export type TeacherCreateWithoutStudentInput = {
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutTeacherInput
-    Test_Tuition_Student_Info?: Test_Tuition_Student_InfoCreateNestedOneWithoutTeacherInput
+    test_tuition?: Test_TuitionCreateNestedManyWithoutTeacherInput
   }
 
   export type TeacherUncheckedCreateWithoutStudentInput = {
@@ -9379,7 +8349,7 @@ export namespace Prisma {
     userId: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    Test_Tuition_Student_Info?: Test_Tuition_Student_InfoUncheckedCreateNestedOneWithoutTeacherInput
+    test_tuition?: Test_TuitionUncheckedCreateNestedManyWithoutTeacherInput
   }
 
   export type TeacherCreateOrConnectWithoutStudentInput = {
@@ -9393,6 +8363,7 @@ export namespace Prisma {
     lastName?: string | null
     imageUrl?: string | null
     clerkUserId: string
+    role?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     Teacher?: TeacherCreateNestedOneWithoutUserInput
@@ -9405,6 +8376,7 @@ export namespace Prisma {
     lastName?: string | null
     imageUrl?: string | null
     clerkUserId: string
+    role?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     Teacher?: TeacherUncheckedCreateNestedOneWithoutUserInput
@@ -9444,19 +8416,33 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type Test_Tuition_Student_InfoCreateWithoutStudentInput = {
-    teacher: TeacherCreateNestedOneWithoutTest_Tuition_Student_InfoInput
-    tuition_test: Test_TuitionCreateNestedOneWithoutTest_tuition_student_infoInput
+  export type Test_TuitionCreateWithoutStudentInput = {
+    name: string
+    syllabus: string
+    date: Date | string
+    marks_scored: number
+    total_marks: number
+    teacher: TeacherCreateNestedOneWithoutTest_tuitionInput
   }
 
-  export type Test_Tuition_Student_InfoUncheckedCreateWithoutStudentInput = {
-    testId: number
+  export type Test_TuitionUncheckedCreateWithoutStudentInput = {
+    id?: number
+    name: string
+    syllabus: string
+    date: Date | string
+    marks_scored: number
+    total_marks: number
     teacherId: number
   }
 
-  export type Test_Tuition_Student_InfoCreateOrConnectWithoutStudentInput = {
-    where: Test_Tuition_Student_InfoWhereUniqueInput
-    create: XOR<Test_Tuition_Student_InfoCreateWithoutStudentInput, Test_Tuition_Student_InfoUncheckedCreateWithoutStudentInput>
+  export type Test_TuitionCreateOrConnectWithoutStudentInput = {
+    where: Test_TuitionWhereUniqueInput
+    create: XOR<Test_TuitionCreateWithoutStudentInput, Test_TuitionUncheckedCreateWithoutStudentInput>
+  }
+
+  export type Test_TuitionCreateManyStudentInputEnvelope = {
+    data: Test_TuitionCreateManyStudentInput | Test_TuitionCreateManyStudentInput[]
+    skipDuplicates?: boolean
   }
 
   export type TeacherUpsertWithoutStudentInput = {
@@ -9474,7 +8460,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutTeacherNestedInput
-    Test_Tuition_Student_Info?: Test_Tuition_Student_InfoUpdateOneWithoutTeacherNestedInput
+    test_tuition?: Test_TuitionUpdateManyWithoutTeacherNestedInput
   }
 
   export type TeacherUncheckedUpdateWithoutStudentInput = {
@@ -9482,7 +8468,7 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Test_Tuition_Student_Info?: Test_Tuition_Student_InfoUncheckedUpdateOneWithoutTeacherNestedInput
+    test_tuition?: Test_TuitionUncheckedUpdateManyWithoutTeacherNestedInput
   }
 
   export type UserUpsertWithoutStudentInput = {
@@ -9502,6 +8488,7 @@ export namespace Prisma {
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     clerkUserId?: StringFieldUpdateOperationsInput | string
+    role?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Teacher?: TeacherUpdateOneWithoutUserNestedInput
@@ -9514,6 +8501,7 @@ export namespace Prisma {
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     clerkUserId?: StringFieldUpdateOperationsInput | string
+    role?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Teacher?: TeacherUncheckedUpdateOneWithoutUserNestedInput
@@ -9549,25 +8537,34 @@ export namespace Prisma {
     studentId?: IntFilter<"Test_School"> | number
   }
 
-  export type Test_Tuition_Student_InfoUpsertWithoutStudentInput = {
-    update: XOR<Test_Tuition_Student_InfoUpdateWithoutStudentInput, Test_Tuition_Student_InfoUncheckedUpdateWithoutStudentInput>
-    create: XOR<Test_Tuition_Student_InfoCreateWithoutStudentInput, Test_Tuition_Student_InfoUncheckedCreateWithoutStudentInput>
-    where?: Test_Tuition_Student_InfoWhereInput
+  export type Test_TuitionUpsertWithWhereUniqueWithoutStudentInput = {
+    where: Test_TuitionWhereUniqueInput
+    update: XOR<Test_TuitionUpdateWithoutStudentInput, Test_TuitionUncheckedUpdateWithoutStudentInput>
+    create: XOR<Test_TuitionCreateWithoutStudentInput, Test_TuitionUncheckedCreateWithoutStudentInput>
   }
 
-  export type Test_Tuition_Student_InfoUpdateToOneWithWhereWithoutStudentInput = {
-    where?: Test_Tuition_Student_InfoWhereInput
-    data: XOR<Test_Tuition_Student_InfoUpdateWithoutStudentInput, Test_Tuition_Student_InfoUncheckedUpdateWithoutStudentInput>
+  export type Test_TuitionUpdateWithWhereUniqueWithoutStudentInput = {
+    where: Test_TuitionWhereUniqueInput
+    data: XOR<Test_TuitionUpdateWithoutStudentInput, Test_TuitionUncheckedUpdateWithoutStudentInput>
   }
 
-  export type Test_Tuition_Student_InfoUpdateWithoutStudentInput = {
-    teacher?: TeacherUpdateOneRequiredWithoutTest_Tuition_Student_InfoNestedInput
-    tuition_test?: Test_TuitionUpdateOneRequiredWithoutTest_tuition_student_infoNestedInput
+  export type Test_TuitionUpdateManyWithWhereWithoutStudentInput = {
+    where: Test_TuitionScalarWhereInput
+    data: XOR<Test_TuitionUpdateManyMutationInput, Test_TuitionUncheckedUpdateManyWithoutStudentInput>
   }
 
-  export type Test_Tuition_Student_InfoUncheckedUpdateWithoutStudentInput = {
-    testId?: IntFieldUpdateOperationsInput | number
-    teacherId?: IntFieldUpdateOperationsInput | number
+  export type Test_TuitionScalarWhereInput = {
+    AND?: Test_TuitionScalarWhereInput | Test_TuitionScalarWhereInput[]
+    OR?: Test_TuitionScalarWhereInput[]
+    NOT?: Test_TuitionScalarWhereInput | Test_TuitionScalarWhereInput[]
+    id?: IntFilter<"Test_Tuition"> | number
+    name?: StringFilter<"Test_Tuition"> | string
+    syllabus?: StringFilter<"Test_Tuition"> | string
+    date?: DateTimeFilter<"Test_Tuition"> | Date | string
+    marks_scored?: IntFilter<"Test_Tuition"> | number
+    total_marks?: IntFilter<"Test_Tuition"> | number
+    teacherId?: IntFilter<"Test_Tuition"> | number
+    studentId?: IntFilter<"Test_Tuition"> | number
   }
 
   export type StudentCreateWithoutTeacherInput = {
@@ -9578,7 +8575,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutStudentInput
     school_tests?: Test_SchoolCreateNestedManyWithoutStudentInput
-    test_tuition_student_info?: Test_Tuition_Student_InfoCreateNestedOneWithoutStudentInput
+    tuition_tests?: Test_TuitionCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutTeacherInput = {
@@ -9590,12 +8587,17 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     school_tests?: Test_SchoolUncheckedCreateNestedManyWithoutStudentInput
-    test_tuition_student_info?: Test_Tuition_Student_InfoUncheckedCreateNestedOneWithoutStudentInput
+    tuition_tests?: Test_TuitionUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutTeacherInput = {
     where: StudentWhereUniqueInput
     create: XOR<StudentCreateWithoutTeacherInput, StudentUncheckedCreateWithoutTeacherInput>
+  }
+
+  export type StudentCreateManyTeacherInputEnvelope = {
+    data: StudentCreateManyTeacherInput | StudentCreateManyTeacherInput[]
+    skipDuplicates?: boolean
   }
 
   export type UserCreateWithoutTeacherInput = {
@@ -9604,6 +8606,7 @@ export namespace Prisma {
     lastName?: string | null
     imageUrl?: string | null
     clerkUserId: string
+    role?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     Student?: StudentCreateNestedOneWithoutUserInput
@@ -9616,6 +8619,7 @@ export namespace Prisma {
     lastName?: string | null
     imageUrl?: string | null
     clerkUserId: string
+    role?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     Student?: StudentUncheckedCreateNestedOneWithoutUserInput
@@ -9626,53 +8630,63 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutTeacherInput, UserUncheckedCreateWithoutTeacherInput>
   }
 
-  export type Test_Tuition_Student_InfoCreateWithoutTeacherInput = {
-    student: StudentCreateNestedOneWithoutTest_tuition_student_infoInput
-    tuition_test: Test_TuitionCreateNestedOneWithoutTest_tuition_student_infoInput
+  export type Test_TuitionCreateWithoutTeacherInput = {
+    name: string
+    syllabus: string
+    date: Date | string
+    marks_scored: number
+    total_marks: number
+    student: StudentCreateNestedOneWithoutTuition_testsInput
   }
 
-  export type Test_Tuition_Student_InfoUncheckedCreateWithoutTeacherInput = {
-    testId: number
+  export type Test_TuitionUncheckedCreateWithoutTeacherInput = {
+    id?: number
+    name: string
+    syllabus: string
+    date: Date | string
+    marks_scored: number
+    total_marks: number
     studentId: number
   }
 
-  export type Test_Tuition_Student_InfoCreateOrConnectWithoutTeacherInput = {
-    where: Test_Tuition_Student_InfoWhereUniqueInput
-    create: XOR<Test_Tuition_Student_InfoCreateWithoutTeacherInput, Test_Tuition_Student_InfoUncheckedCreateWithoutTeacherInput>
+  export type Test_TuitionCreateOrConnectWithoutTeacherInput = {
+    where: Test_TuitionWhereUniqueInput
+    create: XOR<Test_TuitionCreateWithoutTeacherInput, Test_TuitionUncheckedCreateWithoutTeacherInput>
   }
 
-  export type StudentUpsertWithoutTeacherInput = {
+  export type Test_TuitionCreateManyTeacherInputEnvelope = {
+    data: Test_TuitionCreateManyTeacherInput | Test_TuitionCreateManyTeacherInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type StudentUpsertWithWhereUniqueWithoutTeacherInput = {
+    where: StudentWhereUniqueInput
     update: XOR<StudentUpdateWithoutTeacherInput, StudentUncheckedUpdateWithoutTeacherInput>
     create: XOR<StudentCreateWithoutTeacherInput, StudentUncheckedCreateWithoutTeacherInput>
-    where?: StudentWhereInput
   }
 
-  export type StudentUpdateToOneWithWhereWithoutTeacherInput = {
-    where?: StudentWhereInput
+  export type StudentUpdateWithWhereUniqueWithoutTeacherInput = {
+    where: StudentWhereUniqueInput
     data: XOR<StudentUpdateWithoutTeacherInput, StudentUncheckedUpdateWithoutTeacherInput>
   }
 
-  export type StudentUpdateWithoutTeacherInput = {
-    grade?: NullableStringFieldUpdateOperationsInput | string | null
-    school?: NullableStringFieldUpdateOperationsInput | string | null
-    board?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutStudentNestedInput
-    school_tests?: Test_SchoolUpdateManyWithoutStudentNestedInput
-    test_tuition_student_info?: Test_Tuition_Student_InfoUpdateOneWithoutStudentNestedInput
+  export type StudentUpdateManyWithWhereWithoutTeacherInput = {
+    where: StudentScalarWhereInput
+    data: XOR<StudentUpdateManyMutationInput, StudentUncheckedUpdateManyWithoutTeacherInput>
   }
 
-  export type StudentUncheckedUpdateWithoutTeacherInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-    grade?: NullableStringFieldUpdateOperationsInput | string | null
-    school?: NullableStringFieldUpdateOperationsInput | string | null
-    board?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    school_tests?: Test_SchoolUncheckedUpdateManyWithoutStudentNestedInput
-    test_tuition_student_info?: Test_Tuition_Student_InfoUncheckedUpdateOneWithoutStudentNestedInput
+  export type StudentScalarWhereInput = {
+    AND?: StudentScalarWhereInput | StudentScalarWhereInput[]
+    OR?: StudentScalarWhereInput[]
+    NOT?: StudentScalarWhereInput | StudentScalarWhereInput[]
+    id?: IntFilter<"Student"> | number
+    userId?: IntFilter<"Student"> | number
+    grade?: StringNullableFilter<"Student"> | string | null
+    school?: StringNullableFilter<"Student"> | string | null
+    board?: StringNullableFilter<"Student"> | string | null
+    createdAt?: DateTimeFilter<"Student"> | Date | string
+    updatedAt?: DateTimeFilter<"Student"> | Date | string
+    teacherId?: IntFilter<"Student"> | number
   }
 
   export type UserUpsertWithoutTeacherInput = {
@@ -9692,6 +8706,7 @@ export namespace Prisma {
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     clerkUserId?: StringFieldUpdateOperationsInput | string
+    role?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Student?: StudentUpdateOneWithoutUserNestedInput
@@ -9704,69 +8719,49 @@ export namespace Prisma {
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     clerkUserId?: StringFieldUpdateOperationsInput | string
+    role?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Student?: StudentUncheckedUpdateOneWithoutUserNestedInput
   }
 
-  export type Test_Tuition_Student_InfoUpsertWithoutTeacherInput = {
-    update: XOR<Test_Tuition_Student_InfoUpdateWithoutTeacherInput, Test_Tuition_Student_InfoUncheckedUpdateWithoutTeacherInput>
-    create: XOR<Test_Tuition_Student_InfoCreateWithoutTeacherInput, Test_Tuition_Student_InfoUncheckedCreateWithoutTeacherInput>
-    where?: Test_Tuition_Student_InfoWhereInput
+  export type Test_TuitionUpsertWithWhereUniqueWithoutTeacherInput = {
+    where: Test_TuitionWhereUniqueInput
+    update: XOR<Test_TuitionUpdateWithoutTeacherInput, Test_TuitionUncheckedUpdateWithoutTeacherInput>
+    create: XOR<Test_TuitionCreateWithoutTeacherInput, Test_TuitionUncheckedCreateWithoutTeacherInput>
   }
 
-  export type Test_Tuition_Student_InfoUpdateToOneWithWhereWithoutTeacherInput = {
-    where?: Test_Tuition_Student_InfoWhereInput
-    data: XOR<Test_Tuition_Student_InfoUpdateWithoutTeacherInput, Test_Tuition_Student_InfoUncheckedUpdateWithoutTeacherInput>
+  export type Test_TuitionUpdateWithWhereUniqueWithoutTeacherInput = {
+    where: Test_TuitionWhereUniqueInput
+    data: XOR<Test_TuitionUpdateWithoutTeacherInput, Test_TuitionUncheckedUpdateWithoutTeacherInput>
   }
 
-  export type Test_Tuition_Student_InfoUpdateWithoutTeacherInput = {
-    student?: StudentUpdateOneRequiredWithoutTest_tuition_student_infoNestedInput
-    tuition_test?: Test_TuitionUpdateOneRequiredWithoutTest_tuition_student_infoNestedInput
+  export type Test_TuitionUpdateManyWithWhereWithoutTeacherInput = {
+    where: Test_TuitionScalarWhereInput
+    data: XOR<Test_TuitionUpdateManyMutationInput, Test_TuitionUncheckedUpdateManyWithoutTeacherInput>
   }
 
-  export type Test_Tuition_Student_InfoUncheckedUpdateWithoutTeacherInput = {
-    testId?: IntFieldUpdateOperationsInput | number
-    studentId?: IntFieldUpdateOperationsInput | number
+  export type TeacherCreateWithoutTest_tuitionInput = {
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Student?: StudentCreateNestedManyWithoutTeacherInput
+    user: UserCreateNestedOneWithoutTeacherInput
   }
 
-  export type Test_Tuition_Student_InfoCreateWithoutTuition_testInput = {
-    student: StudentCreateNestedOneWithoutTest_tuition_student_infoInput
-    teacher: TeacherCreateNestedOneWithoutTest_Tuition_Student_InfoInput
+  export type TeacherUncheckedCreateWithoutTest_tuitionInput = {
+    id?: number
+    userId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Student?: StudentUncheckedCreateNestedManyWithoutTeacherInput
   }
 
-  export type Test_Tuition_Student_InfoUncheckedCreateWithoutTuition_testInput = {
-    teacherId: number
-    studentId: number
+  export type TeacherCreateOrConnectWithoutTest_tuitionInput = {
+    where: TeacherWhereUniqueInput
+    create: XOR<TeacherCreateWithoutTest_tuitionInput, TeacherUncheckedCreateWithoutTest_tuitionInput>
   }
 
-  export type Test_Tuition_Student_InfoCreateOrConnectWithoutTuition_testInput = {
-    where: Test_Tuition_Student_InfoWhereUniqueInput
-    create: XOR<Test_Tuition_Student_InfoCreateWithoutTuition_testInput, Test_Tuition_Student_InfoUncheckedCreateWithoutTuition_testInput>
-  }
-
-  export type Test_Tuition_Student_InfoUpsertWithoutTuition_testInput = {
-    update: XOR<Test_Tuition_Student_InfoUpdateWithoutTuition_testInput, Test_Tuition_Student_InfoUncheckedUpdateWithoutTuition_testInput>
-    create: XOR<Test_Tuition_Student_InfoCreateWithoutTuition_testInput, Test_Tuition_Student_InfoUncheckedCreateWithoutTuition_testInput>
-    where?: Test_Tuition_Student_InfoWhereInput
-  }
-
-  export type Test_Tuition_Student_InfoUpdateToOneWithWhereWithoutTuition_testInput = {
-    where?: Test_Tuition_Student_InfoWhereInput
-    data: XOR<Test_Tuition_Student_InfoUpdateWithoutTuition_testInput, Test_Tuition_Student_InfoUncheckedUpdateWithoutTuition_testInput>
-  }
-
-  export type Test_Tuition_Student_InfoUpdateWithoutTuition_testInput = {
-    student?: StudentUpdateOneRequiredWithoutTest_tuition_student_infoNestedInput
-    teacher?: TeacherUpdateOneRequiredWithoutTest_Tuition_Student_InfoNestedInput
-  }
-
-  export type Test_Tuition_Student_InfoUncheckedUpdateWithoutTuition_testInput = {
-    teacherId?: IntFieldUpdateOperationsInput | number
-    studentId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type StudentCreateWithoutTest_tuition_student_infoInput = {
+  export type StudentCreateWithoutTuition_testsInput = {
     grade?: string | null
     school?: string | null
     board?: string | null
@@ -9777,7 +8772,7 @@ export namespace Prisma {
     school_tests?: Test_SchoolCreateNestedManyWithoutStudentInput
   }
 
-  export type StudentUncheckedCreateWithoutTest_tuition_student_infoInput = {
+  export type StudentUncheckedCreateWithoutTuition_testsInput = {
     id?: number
     userId: number
     grade?: string | null
@@ -9789,65 +8784,49 @@ export namespace Prisma {
     school_tests?: Test_SchoolUncheckedCreateNestedManyWithoutStudentInput
   }
 
-  export type StudentCreateOrConnectWithoutTest_tuition_student_infoInput = {
+  export type StudentCreateOrConnectWithoutTuition_testsInput = {
     where: StudentWhereUniqueInput
-    create: XOR<StudentCreateWithoutTest_tuition_student_infoInput, StudentUncheckedCreateWithoutTest_tuition_student_infoInput>
+    create: XOR<StudentCreateWithoutTuition_testsInput, StudentUncheckedCreateWithoutTuition_testsInput>
   }
 
-  export type TeacherCreateWithoutTest_Tuition_Student_InfoInput = {
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    Student?: StudentCreateNestedOneWithoutTeacherInput
-    user: UserCreateNestedOneWithoutTeacherInput
+  export type TeacherUpsertWithoutTest_tuitionInput = {
+    update: XOR<TeacherUpdateWithoutTest_tuitionInput, TeacherUncheckedUpdateWithoutTest_tuitionInput>
+    create: XOR<TeacherCreateWithoutTest_tuitionInput, TeacherUncheckedCreateWithoutTest_tuitionInput>
+    where?: TeacherWhereInput
   }
 
-  export type TeacherUncheckedCreateWithoutTest_Tuition_Student_InfoInput = {
-    id?: number
-    userId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    Student?: StudentUncheckedCreateNestedOneWithoutTeacherInput
+  export type TeacherUpdateToOneWithWhereWithoutTest_tuitionInput = {
+    where?: TeacherWhereInput
+    data: XOR<TeacherUpdateWithoutTest_tuitionInput, TeacherUncheckedUpdateWithoutTest_tuitionInput>
   }
 
-  export type TeacherCreateOrConnectWithoutTest_Tuition_Student_InfoInput = {
-    where: TeacherWhereUniqueInput
-    create: XOR<TeacherCreateWithoutTest_Tuition_Student_InfoInput, TeacherUncheckedCreateWithoutTest_Tuition_Student_InfoInput>
+  export type TeacherUpdateWithoutTest_tuitionInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Student?: StudentUpdateManyWithoutTeacherNestedInput
+    user?: UserUpdateOneRequiredWithoutTeacherNestedInput
   }
 
-  export type Test_TuitionCreateWithoutTest_tuition_student_infoInput = {
-    name: string
-    subject: string
-    date: Date | string
-    marks_scored: number
-    total_marks: number
+  export type TeacherUncheckedUpdateWithoutTest_tuitionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Student?: StudentUncheckedUpdateManyWithoutTeacherNestedInput
   }
 
-  export type Test_TuitionUncheckedCreateWithoutTest_tuition_student_infoInput = {
-    id?: number
-    name: string
-    subject: string
-    date: Date | string
-    marks_scored: number
-    total_marks: number
-  }
-
-  export type Test_TuitionCreateOrConnectWithoutTest_tuition_student_infoInput = {
-    where: Test_TuitionWhereUniqueInput
-    create: XOR<Test_TuitionCreateWithoutTest_tuition_student_infoInput, Test_TuitionUncheckedCreateWithoutTest_tuition_student_infoInput>
-  }
-
-  export type StudentUpsertWithoutTest_tuition_student_infoInput = {
-    update: XOR<StudentUpdateWithoutTest_tuition_student_infoInput, StudentUncheckedUpdateWithoutTest_tuition_student_infoInput>
-    create: XOR<StudentCreateWithoutTest_tuition_student_infoInput, StudentUncheckedCreateWithoutTest_tuition_student_infoInput>
+  export type StudentUpsertWithoutTuition_testsInput = {
+    update: XOR<StudentUpdateWithoutTuition_testsInput, StudentUncheckedUpdateWithoutTuition_testsInput>
+    create: XOR<StudentCreateWithoutTuition_testsInput, StudentUncheckedCreateWithoutTuition_testsInput>
     where?: StudentWhereInput
   }
 
-  export type StudentUpdateToOneWithWhereWithoutTest_tuition_student_infoInput = {
+  export type StudentUpdateToOneWithWhereWithoutTuition_testsInput = {
     where?: StudentWhereInput
-    data: XOR<StudentUpdateWithoutTest_tuition_student_infoInput, StudentUncheckedUpdateWithoutTest_tuition_student_infoInput>
+    data: XOR<StudentUpdateWithoutTuition_testsInput, StudentUncheckedUpdateWithoutTuition_testsInput>
   }
 
-  export type StudentUpdateWithoutTest_tuition_student_infoInput = {
+  export type StudentUpdateWithoutTuition_testsInput = {
     grade?: NullableStringFieldUpdateOperationsInput | string | null
     school?: NullableStringFieldUpdateOperationsInput | string | null
     board?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9858,7 +8837,7 @@ export namespace Prisma {
     school_tests?: Test_SchoolUpdateManyWithoutStudentNestedInput
   }
 
-  export type StudentUncheckedUpdateWithoutTest_tuition_student_infoInput = {
+  export type StudentUncheckedUpdateWithoutTuition_testsInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     grade?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9870,60 +8849,6 @@ export namespace Prisma {
     school_tests?: Test_SchoolUncheckedUpdateManyWithoutStudentNestedInput
   }
 
-  export type TeacherUpsertWithoutTest_Tuition_Student_InfoInput = {
-    update: XOR<TeacherUpdateWithoutTest_Tuition_Student_InfoInput, TeacherUncheckedUpdateWithoutTest_Tuition_Student_InfoInput>
-    create: XOR<TeacherCreateWithoutTest_Tuition_Student_InfoInput, TeacherUncheckedCreateWithoutTest_Tuition_Student_InfoInput>
-    where?: TeacherWhereInput
-  }
-
-  export type TeacherUpdateToOneWithWhereWithoutTest_Tuition_Student_InfoInput = {
-    where?: TeacherWhereInput
-    data: XOR<TeacherUpdateWithoutTest_Tuition_Student_InfoInput, TeacherUncheckedUpdateWithoutTest_Tuition_Student_InfoInput>
-  }
-
-  export type TeacherUpdateWithoutTest_Tuition_Student_InfoInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Student?: StudentUpdateOneWithoutTeacherNestedInput
-    user?: UserUpdateOneRequiredWithoutTeacherNestedInput
-  }
-
-  export type TeacherUncheckedUpdateWithoutTest_Tuition_Student_InfoInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Student?: StudentUncheckedUpdateOneWithoutTeacherNestedInput
-  }
-
-  export type Test_TuitionUpsertWithoutTest_tuition_student_infoInput = {
-    update: XOR<Test_TuitionUpdateWithoutTest_tuition_student_infoInput, Test_TuitionUncheckedUpdateWithoutTest_tuition_student_infoInput>
-    create: XOR<Test_TuitionCreateWithoutTest_tuition_student_infoInput, Test_TuitionUncheckedCreateWithoutTest_tuition_student_infoInput>
-    where?: Test_TuitionWhereInput
-  }
-
-  export type Test_TuitionUpdateToOneWithWhereWithoutTest_tuition_student_infoInput = {
-    where?: Test_TuitionWhereInput
-    data: XOR<Test_TuitionUpdateWithoutTest_tuition_student_infoInput, Test_TuitionUncheckedUpdateWithoutTest_tuition_student_infoInput>
-  }
-
-  export type Test_TuitionUpdateWithoutTest_tuition_student_infoInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    subject?: StringFieldUpdateOperationsInput | string
-    date?: DateTimeFieldUpdateOperationsInput | Date | string
-    marks_scored?: IntFieldUpdateOperationsInput | number
-    total_marks?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type Test_TuitionUncheckedUpdateWithoutTest_tuition_student_infoInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    subject?: StringFieldUpdateOperationsInput | string
-    date?: DateTimeFieldUpdateOperationsInput | Date | string
-    marks_scored?: IntFieldUpdateOperationsInput | number
-    total_marks?: IntFieldUpdateOperationsInput | number
-  }
-
   export type StudentCreateWithoutSchool_testsInput = {
     grade?: string | null
     school?: string | null
@@ -9932,7 +8857,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     teacher: TeacherCreateNestedOneWithoutStudentInput
     user: UserCreateNestedOneWithoutStudentInput
-    test_tuition_student_info?: Test_Tuition_Student_InfoCreateNestedOneWithoutStudentInput
+    tuition_tests?: Test_TuitionCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutSchool_testsInput = {
@@ -9944,7 +8869,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     teacherId: number
-    test_tuition_student_info?: Test_Tuition_Student_InfoUncheckedCreateNestedOneWithoutStudentInput
+    tuition_tests?: Test_TuitionUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutSchool_testsInput = {
@@ -9971,7 +8896,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     teacher?: TeacherUpdateOneRequiredWithoutStudentNestedInput
     user?: UserUpdateOneRequiredWithoutStudentNestedInput
-    test_tuition_student_info?: Test_Tuition_Student_InfoUpdateOneWithoutStudentNestedInput
+    tuition_tests?: Test_TuitionUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutSchool_testsInput = {
@@ -9983,7 +8908,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     teacherId?: IntFieldUpdateOperationsInput | number
-    test_tuition_student_info?: Test_Tuition_Student_InfoUncheckedUpdateOneWithoutStudentNestedInput
+    tuition_tests?: Test_TuitionUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type Test_SchoolCreateManyStudentInput = {
@@ -9994,6 +8919,16 @@ export namespace Prisma {
     marks_scored: number
     total_marks: number
     test_status: boolean
+  }
+
+  export type Test_TuitionCreateManyStudentInput = {
+    id?: number
+    name: string
+    syllabus: string
+    date: Date | string
+    marks_scored: number
+    total_marks: number
+    teacherId: number
   }
 
   export type Test_SchoolUpdateWithoutStudentInput = {
@@ -10025,6 +8960,117 @@ export namespace Prisma {
     test_status?: BoolFieldUpdateOperationsInput | boolean
   }
 
+  export type Test_TuitionUpdateWithoutStudentInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    syllabus?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    marks_scored?: IntFieldUpdateOperationsInput | number
+    total_marks?: IntFieldUpdateOperationsInput | number
+    teacher?: TeacherUpdateOneRequiredWithoutTest_tuitionNestedInput
+  }
+
+  export type Test_TuitionUncheckedUpdateWithoutStudentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    syllabus?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    marks_scored?: IntFieldUpdateOperationsInput | number
+    total_marks?: IntFieldUpdateOperationsInput | number
+    teacherId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type Test_TuitionUncheckedUpdateManyWithoutStudentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    syllabus?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    marks_scored?: IntFieldUpdateOperationsInput | number
+    total_marks?: IntFieldUpdateOperationsInput | number
+    teacherId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type StudentCreateManyTeacherInput = {
+    id?: number
+    userId: number
+    grade?: string | null
+    school?: string | null
+    board?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type Test_TuitionCreateManyTeacherInput = {
+    id?: number
+    name: string
+    syllabus: string
+    date: Date | string
+    marks_scored: number
+    total_marks: number
+    studentId: number
+  }
+
+  export type StudentUpdateWithoutTeacherInput = {
+    grade?: NullableStringFieldUpdateOperationsInput | string | null
+    school?: NullableStringFieldUpdateOperationsInput | string | null
+    board?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutStudentNestedInput
+    school_tests?: Test_SchoolUpdateManyWithoutStudentNestedInput
+    tuition_tests?: Test_TuitionUpdateManyWithoutStudentNestedInput
+  }
+
+  export type StudentUncheckedUpdateWithoutTeacherInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    grade?: NullableStringFieldUpdateOperationsInput | string | null
+    school?: NullableStringFieldUpdateOperationsInput | string | null
+    board?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    school_tests?: Test_SchoolUncheckedUpdateManyWithoutStudentNestedInput
+    tuition_tests?: Test_TuitionUncheckedUpdateManyWithoutStudentNestedInput
+  }
+
+  export type StudentUncheckedUpdateManyWithoutTeacherInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    grade?: NullableStringFieldUpdateOperationsInput | string | null
+    school?: NullableStringFieldUpdateOperationsInput | string | null
+    board?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type Test_TuitionUpdateWithoutTeacherInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    syllabus?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    marks_scored?: IntFieldUpdateOperationsInput | number
+    total_marks?: IntFieldUpdateOperationsInput | number
+    student?: StudentUpdateOneRequiredWithoutTuition_testsNestedInput
+  }
+
+  export type Test_TuitionUncheckedUpdateWithoutTeacherInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    syllabus?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    marks_scored?: IntFieldUpdateOperationsInput | number
+    total_marks?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type Test_TuitionUncheckedUpdateManyWithoutTeacherInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    syllabus?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    marks_scored?: IntFieldUpdateOperationsInput | number
+    total_marks?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+  }
+
 
 
   /**
@@ -10034,6 +9080,10 @@ export namespace Prisma {
      * @deprecated Use StudentCountOutputTypeDefaultArgs instead
      */
     export type StudentCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = StudentCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use TeacherCountOutputTypeDefaultArgs instead
+     */
+    export type TeacherCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TeacherCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use UserDefaultArgs instead
      */
@@ -10050,10 +9100,6 @@ export namespace Prisma {
      * @deprecated Use Test_TuitionDefaultArgs instead
      */
     export type Test_TuitionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Test_TuitionDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use Test_Tuition_Student_InfoDefaultArgs instead
-     */
-    export type Test_Tuition_Student_InfoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = Test_Tuition_Student_InfoDefaultArgs<ExtArgs>
     /**
      * @deprecated Use Test_SchoolDefaultArgs instead
      */

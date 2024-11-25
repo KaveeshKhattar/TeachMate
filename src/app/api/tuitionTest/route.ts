@@ -3,7 +3,7 @@ import prisma from "../../lib/prisma"; // Adjust based on your project structure
 
 export async function POST(req: NextRequest) {
     try {
-        const { userId, testName, syllabus, date, marksScored, totalMarks } = await req.json();
+        const { userId, teacherId, testName, syllabus, date, marksScored, totalMarks } = await req.json();
         console.log("userId: ", userId);
 
         // Fetch student ID using the Clerk user ID
@@ -11,20 +11,24 @@ export async function POST(req: NextRequest) {
             where: { clerkUserId: userId },
         });
 
-        if (!student) {
+        const teacher = await prisma.user.findUnique({
+            where: { clerkUserId: teacherId },
+        });
+
+        if (!student || !teacher) {
             return NextResponse.json({ message: "Student not found." }, { status: 404 });
         }
 
         // Create a new test record
-        await prisma.test_School.create({
+        await prisma.test_Tuition.create({
             data: {
                 name: testName,
-                syllabus,
+                syllabus: syllabus,
                 date: new Date(date),
                 marks_scored: parseInt(marksScored, 10) || 0,
                 total_marks: parseInt(totalMarks, 10),
-                test_status: marksScored !== null,
-                studentId: student.id, // Use the fetched student ID
+                studentId: student.id,
+                teacherId: teacher.id
             },
         });
 
@@ -40,11 +44,8 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
 
-
     const { searchParams } = new URL(req.url);
     const userId = searchParams.get("userId");
-
-    console.log("userId GET API: ", userId);
 
     if (!userId) {
         // Return an error if userId is not provided
@@ -65,11 +66,11 @@ export async function GET(req: NextRequest) {
         console.log("Student: ", student);
 
         // Fetch the tests associated with the student ID
-        const tests = await prisma.test_School.findMany({
+        const tests = await prisma.test_Tuition.findMany({
             where: { studentId: student.id },
         });
 
-        console.log("tests: ", tests)
+        console.log("tuition tests: ", tests)
 
         // Return the fetched tests as JSON
         return NextResponse.json(tests);
@@ -117,19 +118,19 @@ export async function PUT(request: Request) {
 export async function DELETE(req: NextRequest) {
     console.log("************CALLLED**************");
     try {
-      const { testId } = await req.json();
-      console.log("Test ID to delete:", testId);
-  
-      await prisma.test_School.delete({
-        where: { id: testId },
-      });
-  
-      return NextResponse.json({ message: "Test deleted successfully" }, { status: 200 });
+        const { testId } = await req.json();
+        console.log("Test ID to delete:", testId);
+
+        await prisma.test_Tuition.delete({
+            where: { id: testId },
+        });
+
+        return NextResponse.json({ message: "Test deleted successfully" }, { status: 200 });
     } catch (error) {
-      console.error("Error deleting test:", error);
-      return NextResponse.json(
-        { message: "Test not found or Internal Error" },
-        { status: 404 }
-      );
+        console.error("Error deleting test:", error);
+        return NextResponse.json(
+            { message: "Test not found or Internal Error" },
+            { status: 404 }
+        );
     }
-  }
+}
